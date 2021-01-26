@@ -1,0 +1,24 @@
+{
+  "name": "mp-cli",
+  "version": "1.0.0",
+  "description": "积理小程序-CLI",
+  "main": "index.js",
+  "bin": {
+    "mp": "./index.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^7.0.0",
+    "inquirer": "^7.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/szh0526/mp-cli.git"
+  }
+}
