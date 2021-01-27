@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+const { arguments } = require('commander');
+const Program = require('commander')
+const inquirer = require('inquirer')
+const logger = require('../src/lib/log')
+const Prompt = inquirer.prompt
+
+const initPrompt = [{
+  type: 'list',
+  name: 'plattype',
+  message: '请选择平台类型?',
+  choices: [
+    'pass',
+    'sass'
+  ]
+},
+{
+  type: 'list',
+  name: 'vmCounts',
+  message: '请选择您包含的虚拟机数量?',
+  choices: ['100', '200', '500', '1000']
+}];
+
+
+Program
+  .name('mp init')
+  .option('--type [typeName]', 'type: dev && build')
+  .action(() => {
+    console.log(arguments[0])
+    Prompt(initPrompt).then(result => {
+      logger.success("您选择的平台类型信息如下：");
+      console.log(JSON.stringify(result));
+    })
+  })
+  
+Program.parse(process.argv);

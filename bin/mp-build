@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+const Program = require('commander')
+
+Program
+  // .name('mp build')
+  // .option('-n,--name,项目目录')
+  .action(function(action){
+    console.log(action)
+  })
+
+Program.parse(process.argv)

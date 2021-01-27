@@ -1,4 +1,11 @@
 # **mp-cli**
+<p align="left">
+  <img src="https://img.shields.io/badge/build-passing-brightgreen">
+  <img src="https://img.shields.io/badge/npm-v6.14.6-blue">
+  <img src="https://img.shields.io/badge/license-MIT-green">
+  <img src="https://img.shields.io/badge/timline-1611651550830-9cf">
+</p>
+
 > 专注于项目工程初始化，预编译，打包优化，代码依赖分析，代码压缩，自动化上传代码
 
 ## ***mp-cli***是门店研发部在支持小程序实践基础上抽象出来的用于支持大规模小程序开发的命令行工具，主要解决小程序中的开发、调试、构建、性能优化等方面的问题，包括：
@@ -34,7 +41,7 @@
 
 # **安装**
 ```
-yarn install
+npm install mp-cli --registry=http://registry.m.jd.com/
 ```
 
 # **使用说明**
@@ -51,3 +58,10 @@ yarn install
 * [命令行交互工具-inquirer](https://www.npmjs.com/package/inquirer)
 * [终端美化插件-chalk](https://www.npmjs.com/package/chalk)
 * [小程序开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/)
+* [自动化构建工具](https://www.npmjs.com/package/gulp)
+
+
+# **开发人员**
+| 姓名 | ERP | 职位 |
+| :--- | :--- | :--- |
+| 孙则浩 | sunzehao3<a href="timline://chat/?topin=sunzehao3" title="联系咚咚"><img src="https://king.jd.com/common/img/dongdong.png"></a> | 前端开发工程师岗 |
