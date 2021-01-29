@@ -2,9 +2,12 @@
 <p align="left">
   <img src="https://img.shields.io/badge/build-passing-brightgreen">
   <img src="https://img.shields.io/badge/npm-v6.14.6-blue">
+  <img src="https://img.shields.io/badge/node-v12.18.4-blue">
   <img src="https://img.shields.io/badge/license-MIT-green">
   <img src="https://img.shields.io/badge/timline-1611651550830-9cf">
 </p>
+
+> 一款小而美的微信小程序脚手架工具，帮助你快速开发微信小程序应用
 
 > 专注于项目工程初始化，预编译，打包优化，代码依赖分析，代码压缩，自动化上传代码
 
@@ -41,11 +44,13 @@
 
 # **安装**
 ```
-npm install mp-cli --registry=http://registry.m.jd.com/
+yarn global add mp-cli --registry=http://registry.m.jd.com/
+npm install -g mp-cli  --registry=http://registry.m.jd.com/
 ```
 
 # **使用说明**
-测试
+测试 
+视频转gif图 https://www.soogif.com/
 
 # **命令说明**
 测试
@@ -56,7 +61,8 @@ npm install mp-cli --registry=http://registry.m.jd.com/
 # **参考文献**
 * [命令行工具-commander](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md)
 * [命令行交互工具-inquirer](https://www.npmjs.com/package/inquirer)
-* [终端美化插件-chalk](https://www.npmjs.com/package/chalk)
+* [终端loading-ora](https://www.npmjs.com/package/ora)
+* [终端输入自定义颜色插件-chalk](https://www.npmjs.com/package/chalk)
 * [小程序开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/)
 * [自动化构建工具](https://www.npmjs.com/package/gulp)
 

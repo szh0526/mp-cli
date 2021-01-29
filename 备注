@@ -1,0 +1,139 @@
+
+初始化项目目录
+1.小程序样式
+// app.wxss
+page,view,text,swiper,swiper-item,image,navigator{
+padding:0;
+margin:0;
+box-sizing:border-box;
+}
+
+2.小程序iconfont
+iconfont.wxss
+jd字体库等等
+
+
+3.小程序组件库 
+   1）iPhoneX安全区域组件 https://blog.csdn.net/sinat_24946363/article/details/105181622
+4.小程序工具类（埋点, api模型，日志采集，util, moment, request等）
+5.基础文件目录
+
+前端工程化 构造简单的微信小程序开发脚手架工具
+https://blog.csdn.net/zemprogram/article/details/104151337
+小程序项目目录 样例
+https://www.jianshu.com/p/c205f2b6da2a
+询问用户构建的项目名，默认为文件夹名，写入project.config.json文件中
+询问用户构建时使用的APPID，这里的APPID只是写入project.config.json文件
+询问用户构建项目时默认的页面的文件名，构建相应的文件夹和文件，在app.json中写入相应的路由
+询问用户是否启用plop来快速构建重复文件，是的话就将plopfile.js和模板文件加入到项目中
+通过plop工具将重复文件写入pages文件夹中，在app.json中写入相应的路由
+
+通过脚本的方式创建 小程序项目模板 通过交互的方式输入配置项
+
+思路：
+拿到终端的 输入 key
+得到key 之后复制准备好的模板
+更改 json 文件中的配置项，如工程名，appid 选择基础库版本等
+生成项目模板
+
+目录
+
+| 目录        | 名称 | 说明         |
+|------------|----|------------|
+| assets     | 静态资源 | 图片     |
+| behaviors  | 行为 | 组件间代码共享,类似于mixin     |
+| burry      | 埋点 | 子午线埋点     |
+| components | 自定义组件 | 业务组件，积理组件,基础组件     |
+| models     | 模型 | API请求接口层目录 |
+| pages      | 页面 | 小程序页面目录    |
+| utils      | 工具 | 工具类库目录     | 
+
+
+|- app.js  工程入口
+|- app.json  小程序原生配置
+|- app.wxss  部分公共样式 
+|- doc 项目相关文档 
+|- src 源码目录
+|- asserts 静态资源
+|- mock mock 服务
+|- behaviors 行为 组件间代码共享,类似于mixin
+|- burry  埋点 子午线埋点
+|- components 自定义组件存放目录 业务组件，积理组件,基础组件
+|- config  环境配置 域名配置
+|- lib 项目插件类（sdk）
+|- pages 小程序页面目录
+|- pages/xxx/components  适配当期页面组件
+|- pages/xxx/service  适配当期页面服务
+|- service/commonApi  公共的一些api存放,API请求接口层目录
+|- store     小程序缓存等
+|- utils     工具类库目录  
+|- wx.config.js     程序入口，一些配置，监听，缓存读取，等工程初始操作在此完成  
+
+pages (index（index.js,index.json,index.wxml,index.wxss） , default 默认模版)
+app.js(实现部分逻辑)
+app.json(初始化 首页，我的2个tabbar 并配置图片)
+app.wxss(初始化小程序公共样式，字体库等等)
+project.config.json
+sitemap.json
+
+是否需要第三方
+ext.json
+
+
+lint 是否需要lint
+.eslintrc.js
+prettier 是否需要
+
+.gitignore
+config.js 初始化全局配置（根据环境切换）
+
+README.md(实现基础的操作文档)
+
+mp.config.js(mp-cli自定义配置文件)
+
+mock (index.json)
+
+初始化npm package.json
+
+package name: (test-mp) 
+version: (1.0.0) 
+description: 
+entry point: (app.js) 
+test command: 
+git repository: 
+keywords: 
+author: 
+license: (ISC) 
+About to write to /Users/sunzehao3/Documents/demo/test-mp/package.json:
+
+{
+  "name": "test-mp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+
+Is this OK? (yes) 
+
+
+Feature
+[x] init 项目目录初始化 
+[x] Less/Sass css预编译
+[x] ES6 兼容性参考这里
+[x] async / await
+[x] components 模版文件创建 创建compoents
+[x] page 模版文件创建 创建page
+[x] icon font 字体图标（阿里 IconFont下载图标SVG图片）
+[x] UI组件库选择（有赞 vant-weapp，全渠道风格组件库）
+[x] dev / test / pre / prod 多环境配置（开发版，体验版，生产）
+[x] npm 依赖 小程序官方
+[x] module alias 模块别名
+[x] CICD支持 从控制台一键部署到小程序控制后台，更加语义化的版本号管理
+[x] mp open 从控制台打开小程序开发者工具
+[x] mock 服务

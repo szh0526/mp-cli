@@ -2,5 +2,5 @@
 
 # **本地开发**
 ```
-npm link 软链接到本地node/bin下
+本地测试 npm link 软链接到本地node/bin下
 ```
