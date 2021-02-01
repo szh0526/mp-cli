@@ -8,29 +8,29 @@ class logger {
   /** 
    * 默认
    */
-  info(txt) {
-    log(txt);
+  info(msg) {
+    log(`>> ${msg}`)
   }
 
   /** 
    * 异常
    */
-  error(txt) {
-    log(error(txt))
+  error(msg) {
+    log(error(`>> ${msg}`))
   }
 
   /** 
    * 警告
    */
-  warn(txt) {
-    log(warn(txt))
+  warn(msg) {
+    log(warn(`>> ${msg}`))
   }
 
   /** 
    * 成功
    */
-  success(txt) {
-    log(success(txt));
+  success(msg) {
+    log(success(`>> ${msg}`))
   }
 }
 

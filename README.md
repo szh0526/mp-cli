@@ -42,6 +42,23 @@
 *  webpack
 *  uglify-es
 
+# **Feature**
+[x] init 项目目录初始化 
+[x] page/components 模版文件创建
+[x] icon font 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
+[x] UI组件库选择（有赞 vant-weapp,全渠道风格组件库,无）
+[x] Less/Sass css预编译
+[x] ESlint支持,Prettier代码美化
+[x] ES6 兼容性 （async / await）
+[x] dev / test / pre / prod 多环境配置（开发版，体验版，生产）
+[x] mock 服务（npm包读取项目指定目录json文件，可以配置 --port 和 --host）
+[x] npm 依赖 小程序官方 一键构建npm
+[x] module alias 模块别名
+[x] mp open 从控制台打开小程序开发者工具
+[x] 自定义命令
+[x] 依赖分析和Tree-Shaking代码压缩
+[x] CI/CD支持  从控制台一键部署到小程序控制后台，更加语义化的版本号管理
+
 # **安装**
 ```
 yarn global add mp-cli --registry=http://registry.m.jd.com/
