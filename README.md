@@ -8,8 +8,8 @@
 </p>
 
 > 一款小而美的微信小程序脚手架工具，帮助你快速开发微信小程序应用
-
-> 专注于项目工程初始化，预编译，打包优化，代码依赖分析，代码压缩，自动化上传代码
+> 
+> 专注于项目工程初始化，预编译，代码依赖分析，代码压缩，自动化部署
 
 ## ***mp-cli***是门店研发部在支持小程序实践基础上抽象出来的用于支持大规模小程序开发的命令行工具，主要解决小程序中的开发、调试、构建、性能优化等方面的问题，包括：
 *  页面初始化。开发同学通常不会直接使用微信IDE，而是在VSCode等IDE下开发页面，新建页面的时候需要手工创建页面的js、wxml、wcss、json等文件，多有不便；
@@ -43,21 +43,21 @@
 *  uglify-es
 
 # **Feature**
-[x] init 项目目录初始化 
-[x] page/components 模版文件创建
-[x] icon font 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
-[x] UI组件库选择（有赞 vant-weapp,全渠道风格组件库,无）
-[x] Less/Sass css预编译
-[x] ESlint支持,Prettier代码美化
-[x] ES6 兼容性 （async / await）
-[x] dev / test / pre / prod 多环境配置（开发版，体验版，生产）
-[x] mock 服务（npm包读取项目指定目录json文件，可以配置 --port 和 --host）
-[x] npm 依赖 小程序官方 一键构建npm
-[x] module alias 模块别名
-[x] mp open 从控制台打开小程序开发者工具
-[x] 自定义命令
-[x] 依赖分析和Tree-Shaking代码压缩
-[x] CI/CD支持  从控制台一键部署到小程序控制后台，更加语义化的版本号管理
+- [x] init 项目目录初始化 
+- [x] page/components 模版文件创建
+- [x] icon font 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
+- [x] UI组件库选择（有赞 vant-weapp,全渠道风格组件库,无）
+- [x] Less/Sass css预编译
+- [x] ESlint支持,Prettier代码美化
+- [x] ES6 兼容性 （async / await）
+- [x] dev / test / pre / prod 多环境配置（开发版，体验版，生产）
+- [x] mock 服务（npm包读取项目指定目录json文件，可以配置 --port 和 --host）
+- [x] npm 依赖 小程序官方 一键构建npm
+- [x] module alias 模块别名
+- [x] mp open 从控制台打开小程序开发者工具
+- [x] 自定义命令
+- [x] 依赖分析和Tree-Shaking代码压缩
+- [x] CI/CD支持  从控制台一键部署到小程序控制后台，更加语义化的版本号管理
 
 # **安装**
 ```
