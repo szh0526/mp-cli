@@ -1,19 +1,26 @@
 #!/usr/bin/env node
 const Program = require('commander')
-const logger = require('./../src/lib/log')
-const { version,description } = require('../package.json');
+const logger = require('../src/lib/log')
+const { version, description } = require('../package.json')
 
 Program
   .version(version, '-v, --version', '版本号')
   .usage(`<command> [options], 当前版本: ${version}, 文档: https://github.com/szh0526/mp-cli/blob/main/README.md`)
   .description(description)
-  .command('init', '初始化').alias('i')
-  .command('build', '小程序编译').alias('b')
-  .command('new', '新建页面或组件').alias('n')
-  .command('preview', '预览小程序，生成二维码').alias('p')
-  .command('audit', '项目审计').alias('a')
-  .command('config <cmd>', '全局配置').alias('c')
-  .command('upload', '上传').alias('u')
+  .command('init', '初始化')
+  .alias('i')
+  .command('build', '小程序编译')
+  .alias('b')
+  .command('new', '新建页面或组件')
+  .alias('n')
+  .command('preview', '预览小程序，生成二维码')
+  .alias('p')
+  .command('audit', '项目审计')
+  .alias('a')
+  .command('config <cmd>', '全局配置')
+  .alias('c')
+  .command('upload', '上传')
+  .alias('u')
 
 Program.parse(process.argv)
 
@@ -28,10 +35,10 @@ const VALID_COMMAND = [
   'preview', 'p',
   'audit', 'a',
   'config', 'c',
-  'upload', 'u'
-];
+  'upload', 'u',
+]
 
 if (!VALID_COMMAND.includes(process.argv[2])) {
-  logger.warn('不支持的命令，请查看使用帮助\n');
-  Program.help();
+  logger.warn('不支持的命令，请查看使用帮助\n')
+  Program.help()
 }

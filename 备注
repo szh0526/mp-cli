@@ -36,17 +36,12 @@ https://www.jianshu.com/p/c205f2b6da2a
 更改 json 文件中的配置项，如工程名，appid 选择基础库版本等
 生成项目模板
 
-目录
+目录(目录结构图等init命令最终完成后出)
 
 | 目录        | 名称 | 说明         |
 |------------|----|------------|
-| assets     | 静态资源 | 图片     |
-| behaviors  | 行为 | 组件间代码共享,类似于mixin     |
-| burry      | 埋点 | 子午线埋点     |
-| components | 自定义组件 | 业务组件，积理组件,基础组件     |
 | models     | 模型 | API请求接口层目录 |
 | pages      | 页面 | 小程序页面目录    |
-| utils      | 工具 | 工具类库目录     | 
 
 
 |- app.js  工程入口
@@ -58,16 +53,16 @@ https://www.jianshu.com/p/c205f2b6da2a
 |- mock mock 服务
 |- behaviors 行为 组件间代码共享,类似于mixin
 |- burry  埋点 子午线埋点
-|- components 自定义组件存放目录 业务组件，积理组件,基础组件
+|- components 自定义组件 业务组件，积理组件,基础组件
 |- config  环境配置 域名配置
 |- lib 项目插件类（sdk）
 |- pages 小程序页面目录
 |- pages/xxx/components  适配当期页面组件
 |- pages/xxx/service  适配当期页面服务
-|- service/commonApi  公共的一些api存放,API请求接口层目录
-|- store     小程序缓存等
-|- utils     工具类库目录  
-|- wx.config.js     程序入口，一些配置，监听，缓存读取，等工程初始操作在此完成  
+|- service/index  公共的一些api存放(common),API请求接口层目录
+|- store     状态管理
+|- utils     工具类目录
+|- wx.config.js  mp工程初始配置
 
 pages (index（index.js,index.json,index.wxml,index.wxss） , default 默认模版)
 app.js(实现部分逻辑)
@@ -92,6 +87,7 @@ README.md(实现基础的操作文档)
 mp.config.js(mp-cli自定义配置文件)
 
 mock (index.json)
+
 
 初始化npm package.json
 
@@ -120,21 +116,3 @@ About to write to /Users/sunzehao3/Documents/demo/test-mp/package.json:
 
 
 Is this OK? (yes) 
-
-
-Feature
-[x] init 项目目录初始化 
-[x] page/components 模版文件创建
-[x] icon font 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
-[x] UI组件库选择（有赞 vant-weapp,全渠道风格组件库,无）
-[x] Less/Sass css预编译
-[x] ESlint支持,Prettier代码美化
-[x] ES6 兼容性 （async / await）
-[x] dev / test / pre / prod 多环境配置（开发版，体验版，生产）
-[x] mock 服务（npm包读取项目指定目录json文件，可以配置 --port 和 --host）
-[x] npm 依赖 小程序官方 一键构建npm
-[x] module alias 模块别名
-[x] mp open 从控制台打开小程序开发者工具
-[x] 自定义命令
-[x] 依赖分析和Tree-Shaking代码压缩
-[x] CI/CD支持  从控制台一键部署到小程序控制后台，更加语义化的版本号管理

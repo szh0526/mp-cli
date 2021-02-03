@@ -1,36 +1,112 @@
 #!/usr/bin/env node
-const { arguments } = require('commander');
 const Program = require('commander')
 const inquirer = require('inquirer')
 const logger = require('../src/lib/log')
-const Prompt = inquirer.prompt
+const { isEmptyString } = require('../src/lib/validate')
 
-const initPrompt = [{
-  type: 'list',
-  name: 'plattype',
-  message: '请选择平台类型?',
-  choices: [
-    'pass',
-    'sass'
-  ]
-},
-{
-  type: 'list',
-  name: 'vmCounts',
-  message: '请选择您包含的虚拟机数量?',
-  choices: ['100', '200', '500', '1000']
-}];
+const Prompt = inquirer.createPromptModule()
 
+const toLowerCase = (val) => val.toLowerCase()
 
-Program
-  .name('mp init')
-  .option('--type [typeName]', 'type: dev && build')
-  .action(() => {
-    console.log(arguments[0])
-    Prompt(initPrompt).then(result => {
-      logger.success("您选择的平台类型信息如下：");
-      console.log(JSON.stringify(result));
+const initPrompt = [
+  {
+    type: 'input',
+    name: 'projectName',
+    message: 'Project Name',
+    validate(input) {
+      if (!isEmptyString(input)) {
+        return true
+      }
+      return 'the project name cannot be empty'
+    },
+    filter: toLowerCase,
+  },
+  {
+    type: 'input',
+    name: 'projectDescription',
+    message: 'Project Description',
+    defualt: '',
+  },
+  {
+    type: 'input',
+    name: 'author',
+    message: 'Enter A Name For Author',
+    defualt: '',
+    filter: toLowerCase,
+  },
+  {
+    type: 'input',
+    name: 'appId',
+    message: 'Enter A Code For AppId',
+    validate(input) {
+      if (!isEmptyString(input)) {
+        return true
+      }
+      return 'the appId cannot be empty'
+    },
+    filter: toLowerCase,
+  },
+  {
+    type: 'list',
+    name: 'libVersion',
+    message: 'Select the base library',
+    choices: ['2.15.0', '2.14.4', '2.14.3', '2.14.1', '2.14.0'],
+    default: '2.14.0',
+  },
+  {
+    type: 'input',
+    name: 'pageName',
+    message: 'Init PageName',
+    default: 'index',
+    filter: toLowerCase,
+  },
+  {
+    type: 'confirm',
+    name: 'store',
+    message: 'Install Store?',
+    default: false,
+  },
+  {
+    type: 'list',
+    name: 'componentLibrary',
+    message: 'Select An Component Library',
+    default: 'jpass',
+    choices: ['jpass', 'vant-weapp'],
+  },
+  {
+    type: 'list',
+    name: 'cssPrecompiledType',
+    message: 'Select An Css Precompiled Type',
+    default: 'Sass',
+    choices: ['Sass', 'Less'],
+  },
+  {
+    type: 'confirm',
+    name: 'esLint',
+    message: 'Use ESLint to lint your code?',
+    default: true,
+  },
+  {
+    type: 'confirm',
+    name: 'isOk',
+    message: 'Is this OK?',
+    default: true,
+  },
+]
+
+Program.name('mp init').action(() => {
+  Prompt(initPrompt)
+    .then((answer) => {
+      if (answer.isOk) {
+        console.log(`${JSON.stringify(answer)}`)
+      } else {
+        logger.error('you canceled the operation, please try again')
+      }
     })
-  })
-  
-Program.parse(process.argv);
+    .catch((error) => {
+      console.log(error)
+      logger.error('init error, please try again')
+    })
+})
+
+Program.parse(process.argv)

@@ -4,7 +4,7 @@ const Program = require('commander')
 Program
   // .name('mp build')
   // .option('-n,--name,项目目录')
-  .action(function(action){
+  .action((action) => {
     console.log(action)
   })
 

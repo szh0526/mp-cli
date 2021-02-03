@@ -1,11 +1,11 @@
-/**  
+/**
  * 自定义配置文件
 */
 module.exports = {
-  name:"test",
+  name: 'test',
   zip: 'dist/wechat.zip',
   sass: {
-    dir:'src/css/',
-    output:'src/css/',
-  }
+    dir: 'src/css/',
+    output: 'src/css/',
+  },
 }

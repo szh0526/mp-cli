@@ -44,7 +44,7 @@
 
 # **Feature**
 - [x] init 项目目录初始化 
-- [x] page/components 模版文件创建
+- [x] page/components 模版文件创建 （pages支持多级目录）
 - [x] icon font 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
 - [x] UI组件库选择（有赞 vant-weapp,全渠道风格组件库,无）
 - [x] Less/Sass css预编译
@@ -57,7 +57,7 @@
 - [x] mp open 从控制台打开小程序开发者工具
 - [x] 自定义命令
 - [x] 依赖分析和Tree-Shaking代码压缩
-- [x] CI/CD支持  从控制台一键部署到小程序控制后台，更加语义化的版本号管理
+- [x] CI/CD支持 从控制台一键部署到小程序控制后台，更加语义化的版本号管理
 
 # **安装**
 ```
@@ -66,6 +66,35 @@ npm install -g mp-cli  --registry=http://registry.m.jd.com/
 ```
 
 # **使用说明**
+`mp` 查看子命令说明
+```
+Usage: mp <command> [options], 当前版本: 1.0.0, 文档: https://github.com/szh0526/mp-cli/blob/main/README.md
+
+一款小而美的微信小程序脚手架工具，帮助你快速开发微信小程序应用
+
+Options:
+  -v, --version   版本号
+  -h, --help      display help for command
+
+Commands:
+  init|i          初始化
+  build|b         小程序编译
+  new|n           新建页面或组件
+  preview|p       预览小程序，生成二维码
+  audit|a         项目审计
+  config|c <cmd>  全局配置
+  upload|u        上传
+  help [command]  display help for command
+```
+
+`mp help [cmd]` 查看子命令参数,如：mp help i
+```
+Usage: mp init [options]
+
+Options:
+  -h, --help  display help for command
+```
+
 测试 
 视频转gif图 https://www.soogif.com/
 

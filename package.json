@@ -1,8 +1,7 @@
 {
   "name": "mp-cli",
   "version": "1.0.0",
-  "description": "小程序-CLI",
-  "configName": "mp.config.js",
+  "description": "一款小而美的微信小程序脚手架工具，帮助你快速开发微信小程序应用",
   "main": "index.js",
   "bin": {
     "mp": "./bin/mp"
@@ -14,7 +13,11 @@
     "fs": "0.0.1-security",
     "path": "^0.12.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
   "scripts": {
     "clear": "rm -rf ./dist"
   },
