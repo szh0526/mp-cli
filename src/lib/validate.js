@@ -22,4 +22,6 @@ module.exports = {
   // 判断是数组或对象 typeof {} typeof [] typeof null 返回 'object'
   isObjectOrArray: (obj) => typeof obj === 'object' && obj != null,
   isEmptyString: (str) => str === '' || str === null || str === undefined,
+  isProjectName: (val) => /^[a-zA-Z0-9\-\_]+$/.test(val),
+  isAppId: (val) => /^wx[a-z0-9]+$/.test(val),
 }

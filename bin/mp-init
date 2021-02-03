@@ -1,82 +1,65 @@
 #!/usr/bin/env node
 const Program = require('commander')
 const inquirer = require('inquirer')
-const logger = require('../src/lib/log')
-const { isEmptyString } = require('../src/lib/validate')
+const logger = require('../src/lib/logger')
+const { isProjectName, isAppId } = require('../src/lib/validate')
+const init = require('../src/scripts/init')
 
 const Prompt = inquirer.createPromptModule()
-
-const toLowerCase = (val) => val.toLowerCase()
 
 const initPrompt = [
   {
     type: 'input',
     name: 'projectName',
-    message: 'Project Name',
+    message: 'Please enter a project name',
     validate(input) {
-      if (!isEmptyString(input)) {
-        return true
+      if (!isProjectName(input)) {
+        return 'Invalid project name'
       }
-      return 'the project name cannot be empty'
+      return true
     },
-    filter: toLowerCase,
   },
   {
     type: 'input',
     name: 'projectDescription',
-    message: 'Project Description',
+    message: 'Please enter a project description',
     defualt: '',
   },
   {
     type: 'input',
     name: 'author',
-    message: 'Enter A Name For Author',
+    message: 'Please enter a name for author',
     defualt: '',
-    filter: toLowerCase,
   },
   {
     type: 'input',
     name: 'appId',
-    message: 'Enter A Code For AppId',
+    message: 'Please enter a wechat appId',
     validate(input) {
-      if (!isEmptyString(input)) {
-        return true
+      if (!isAppId(input)) {
+        return 'Invalid wechat appId'
       }
-      return 'the appId cannot be empty'
+      return true
     },
-    filter: toLowerCase,
   },
   {
     type: 'list',
     name: 'libVersion',
-    message: 'Select the base library',
+    message: 'Please choose base wechart libVersion',
     choices: ['2.15.0', '2.14.4', '2.14.3', '2.14.1', '2.14.0'],
     default: '2.14.0',
   },
   {
-    type: 'input',
-    name: 'pageName',
-    message: 'Init PageName',
-    default: 'index',
-    filter: toLowerCase,
-  },
-  {
-    type: 'confirm',
-    name: 'store',
-    message: 'Install Store?',
-    default: false,
-  },
-  {
     type: 'list',
     name: 'componentLibrary',
-    message: 'Select An Component Library',
+    message: 'Please choose An Component Library',
     default: 'jpass',
     choices: ['jpass', 'vant-weapp'],
   },
   {
     type: 'list',
     name: 'cssPrecompiledType',
-    message: 'Select An Css Precompiled Type',
+    message: 'Please choose An Css Precompiled Type',
     default: 'Sass',
     choices: ['Sass', 'Less'],
   },
@@ -98,7 +81,7 @@ Program.name('mp init').action(() => {
   Prompt(initPrompt)
     .then((answer) => {
       if (answer.isOk) {
-        console.log(`${JSON.stringify(answer)}`)
+        init(answer)
       } else {
         logger.error('you canceled the operation, please try again')
       }
