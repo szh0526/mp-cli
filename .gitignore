@@ -15,3 +15,6 @@ yarn.lock
 .idea
 .vscode/
 .settings/
+
+# dev
+mp_init

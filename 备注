@@ -1,12 +1,6 @@
 
 初始化项目目录
 1.小程序样式
-// app.wxss
-page,view,text,swiper,swiper-item,image,navigator{
-padding:0;
-margin:0;
-box-sizing:border-box;
-}
 
 2.小程序iconfont
 iconfont.wxss
@@ -17,24 +11,6 @@ jd字体库等等
    1）iPhoneX安全区域组件 https://blog.csdn.net/sinat_24946363/article/details/105181622
 4.小程序工具类（埋点, api模型，日志采集，util, moment, request等）
 5.基础文件目录
-
-前端工程化 构造简单的微信小程序开发脚手架工具
-https://blog.csdn.net/zemprogram/article/details/104151337
-小程序项目目录 样例
-https://www.jianshu.com/p/c205f2b6da2a
-询问用户构建的项目名，默认为文件夹名，写入project.config.json文件中
-询问用户构建时使用的APPID，这里的APPID只是写入project.config.json文件
-询问用户构建项目时默认的页面的文件名，构建相应的文件夹和文件，在app.json中写入相应的路由
-询问用户是否启用plop来快速构建重复文件，是的话就将plopfile.js和模板文件加入到项目中
-通过plop工具将重复文件写入pages文件夹中，在app.json中写入相应的路由
-
-通过脚本的方式创建 小程序项目模板 通过交互的方式输入配置项
-
-思路：
-拿到终端的 输入 key
-得到key 之后复制准备好的模板
-更改 json 文件中的配置项，如工程名，appid 选择基础库版本等
-生成项目模板
 
 目录(目录结构图等init命令最终完成后出)
 
