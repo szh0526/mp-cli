@@ -2,7 +2,7 @@ const path = require('path')
 
 const cwd = process.cwd()
 const rootDir = path.join(__dirname, '../')
-const templateRoot = path.join(rootDir, 'template')
+const templateRoot = path.join(rootDir, 'template/src')
 
 module.exports = {
 

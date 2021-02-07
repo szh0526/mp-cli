@@ -1,0 +1,42 @@
+@import "/assets/font/jd.wxss";
+@import "/assets/font/iconfont.wxss";
+
+/* global style */
+page {
+  background-color: #f7f7f7;
+  font-size: 24rpx;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica,
+    Segoe UI, Arial, Roboto, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft Yahei", sans-serif;
+}
+
+/* iPhoneX适配 */
+.isIphoneX {
+  padding-bottom: 68rpx !important;
+}
+
+/* 清除浮动 */
+.clearfix {
+  zoom: 1;
+}
+.clearfix:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.ellipsis {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+.ellipsis2 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

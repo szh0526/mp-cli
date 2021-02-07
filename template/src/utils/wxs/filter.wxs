@@ -1,0 +1,81 @@
+/* 使用的是微信小程序的wxs语法，并不是JS语法，与JS的ES5语法类似 */
+/* eslint-disable */
+
+/**
+ * 按长度截取数组
+ * @param array
+ * @param length
+ */
+var limit = function (array, length) {
+  return array.slice(0, length);
+};
+
+/**
+ * 日期格式化
+ * @param strDate 
+ * @param format 
+ */
+var formatTime = function (strDate, format = "yyyy-MM-dd hh:mm:ss") {
+  if (!strDate) {
+    return "";
+  }
+  strDate = strDate
+    .replace(getRegExp("T", "g"), " ")
+    .slice(0, strDate.length - 9);
+  // 解决ios出现NaN问题
+  var realDate = strDate
+    ? getDate(strDate.replace(getRegExp("-", "g"), "/"))
+    : getDate();
+  var regYear = getRegExp("(y+)", "i");
+  var date = [
+    ["M+", realDate.getMonth() + 1],
+    ["d+", realDate.getDate()],
+    ["h+", realDate.getHours()],
+    ["m+", realDate.getMinutes()],
+    ["s+", realDate.getSeconds()],
+    ["q+", Math.floor((realDate.getMonth() + 3) / 3)],
+    ["S+", realDate.getMilliseconds()],
+  ];
+  var reg1 = regYear.exec(format);
+  if (reg1) {
+    format = format.replace(
+      reg1[1],
+      (realDate.getFullYear() + "").substring(4 - reg1[1].length)
+    );
+  }
+  for (var i = 0; i < date.length; i++) {
+    var reg2 = getRegExp("(" + date[i][0] + ")").exec(format);
+    if (reg2) {
+      format = format.replace(
+        reg2[1],
+        reg2[1].length == 1
+          ? v
+          : ("00" + date[i][1]).substring(("" + date[i][1]).length)
+      );
+    }
+  }
+  return format;
+};
+
+/**
+ * 获取毫秒
+ * @param strDate 
+ */
+var getMilliseconds = function (strDate) {
+  if (!strDate) {
+    return 0;
+  }
+  strDate = strDate
+    .replace(getRegExp("T", "g"), " ")
+    .slice(0, strDate.length - 9);
+  var realDate = strDate
+    ? getDate(strDate.replace(getRegExp("-", "g"), "/"))
+    : getDate();
+  return realDate.getMilliseconds();
+};
+
+module.exports = {
+  limit: limit,
+  formatTime: formatTime,
+  getMilliseconds: getMilliseconds,
+};

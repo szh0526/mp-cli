@@ -1,0 +1,29 @@
+.img-swiper-container {
+  position: relative;
+  width: 750rpx;
+  height: 750rpx;
+}
+.img-swiper-body {
+  width: 100%;
+  height: 100%;
+}
+.img-swiper-body .image {
+  width: 750rpx;
+  height: 750rpx;
+}
+.img-swiper-pos {
+  position: absolute;
+  bottom: 30rpx;
+  right: 0rpx;
+  width: 72rpx;
+  height: 36rpx;
+  background: #000000;
+  border-radius: 18rpx 0 0 18rpx;
+  opacity: 0.3;
+  line-height: 36rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #ffffff;
+  text-align: center;
+  padding: 4rpx;
+}

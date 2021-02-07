@@ -2,17 +2,16 @@
  * 初始化小程序目录
  * 标准业务模版，组件库，工具类库，css预编译等
  */
-// const ora = require('ora')
 const path = require('path')
+const chalk = require('chalk')
 const logger = require('../lib/logger')
 const file = require('../lib/file')
 const { cwd, templateRoot } = require('../config')
 
-// const spinner = ora('Loading...\n')
-
 async function init(answer) {
   try {
-    logger.info(`${JSON.stringify(answer)}`)
+    const startTime = new Date()
+    // logger.info(`${JSON.stringify(answer)}`)
     const {
       projectName = 'mp_init',
       projectDescription = '',
@@ -62,15 +61,27 @@ async function init(answer) {
         config.name = projectName
         config.description = projectDescription
         config.author = author
+
+        if (esLint) {
+          config.devDependencies.eslint = '^6.7.2'
+          config.devDependencies['eslint-config-airbnb-base'] = '^14.0.0'
+          config.devDependencies['eslint-plugin-import'] = '^2.18.2'
+        }
+
         await file.writeFile(
           packageJsonRoot,
           JSON.stringify(config, null, '\t'),
         )
       }
-      logger.clear()
-      logger.success(
-        `🚀🚀🚀 Your project ${projectName} has been created successfully!!`,
-      )
+
+      setTimeout(() => {
+        logger.clear()
+        const endTime = new Date()
+        logger.success(` 🚀 Created successfully in ${endTime - startTime}ms \r\n`)
+        logger.log(`        👉 Local development run ${chalk.cyan('mp open')}`)
+        logger.log(`        👉 To create a production build, run ${chalk.cyan('mp build')}`)
+        logger.log(`        👉 Display help for command run ${chalk.cyan('mp help')} \r\n`)
+      }, 1000)
     })
   } catch (e) {
     logger.error(e.stack)

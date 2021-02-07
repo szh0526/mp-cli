@@ -1,0 +1,11 @@
+<view class="img-swiper-container">
+  <swiper class="img-swiper-body" current='{{current}}' bindchange='changCurrent'>
+    <block wx:for="{{imgList}}" wx:key="index">
+      <swiper-item>
+        <image class="image" src="{{item}}" mode="aspectFill" bindtap="previewHandle" data-src="{{item}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- 图片位置 -->
+  <view class="img-swiper-pos">{{imgPostion}}</view>
+</view>
