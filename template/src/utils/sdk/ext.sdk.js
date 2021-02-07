@@ -3,7 +3,7 @@
  */
 const logger = require('../logger/index')
 const $wxUtil = require('./wx.sdk')
-const { STORAGE_KEYS } = require('../constants')
+const { STORAGE_KEYS } = require('../constants/index')
 
 // 初始化配置
 const setExtConfig = () => {

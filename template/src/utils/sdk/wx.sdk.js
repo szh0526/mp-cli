@@ -1,5 +1,5 @@
 const logger = require('../logger/index')
-const { isNumber } = require('../validate')
+const { isNumber } = require('../validate/index')
 
 const checkMethod = (methodName) => {
   if (wx[methodName]) {

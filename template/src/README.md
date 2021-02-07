@@ -1,4 +1,4 @@
-# 小程序
+# XX-小程序
 
 <p align="left">
   <img src="https://img.shields.io/badge/build-passing-brightgreen">

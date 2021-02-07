@@ -4,11 +4,11 @@
  * 微信实时日志：https://developers.weixin.qq.com/miniprogram/dev/framework/realtimelog/
  */
 const { formatTime } = require('../util')
-const { isString, isEmptyObject, isError } = require('../validate')
+const { isString, isEmptyObject, isError } = require('../validate/index')
 const {
   compareVersion, getStorageSync, getSystemInfoSync,
 } = require('../sdk/wx.sdk')
-const { STORAGE_KEYS } = require('../constants')
+const { STORAGE_KEYS } = require('../constants/index')
 
 // 实时日志, 系统定时上传
 const RealtimeLogManager = wx.getRealtimeLogManager()

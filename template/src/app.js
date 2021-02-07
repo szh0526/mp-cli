@@ -1,10 +1,10 @@
 const $api = require('./models/global')
-const logger = require('./utils/logger')
-const $validate = require('./utils/validate')
+const logger = require('./utils/logger/index')
+const $validate = require('./utils/validate/index')
 const $util = require('./utils/util')
 const $wxUtil = require('./utils/sdk/wx.sdk')
 const $extUtil = require('./utils/sdk/ext.sdk')
-const $const = require('./utils/constants')
+const $const = require('./utils/constants/index')
 
 // app.js
 App({
