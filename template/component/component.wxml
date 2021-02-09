@@ -1,1 +1,3 @@
-<view>{{title}}</view>
+<view class="wrapper">
+  <view>{{title}}</view>
+</view>

@@ -8,71 +8,71 @@ const { init } = require('../scripts/init')
 const Prompt = inquirer.createPromptModule()
 
 const initPrompt = [
-  // {
-  //   type: 'input',
-  //   name: 'projectName',
-  //   message: 'Please enter a project name',
-  //   validate(input) {
-  //     if (!isProjectName(input)) {
-  //       return 'Invalid project name'
-  //     }
-  //     return true
-  //   },
-  // },
-  // {
-  //   type: 'input',
-  //   name: 'projectDescription',
-  //   message: 'Please enter a project description',
-  //   defualt: '',
-  // },
-  // {
-  //   type: 'input',
-  //   name: 'author',
-  //   message: 'Please enter a name for author',
-  //   defualt: '',
-  // },
-  // {
-  //   type: 'input',
-  //   name: 'appId',
-  //   message: 'Please enter a wechat appId',
-  //   validate(input) {
-  //     if (!isAppId(input)) {
-  //       return 'Invalid wechat appId'
-  //     }
-  //     return true
-  //   },
-  // },
-  // {
-  //   type: 'list',
-  //   name: 'libVersion',
-  //   message: 'Please choose base wechart libVersion',
-  //   choices: ['2.15.0', '2.14.4', '2.14.3', '2.14.1', '2.14.0'],
-  //   default: '2.14.0',
-  // },
-  // {
-  //   type: 'list',
-  //   name: 'componentLibrary',
-  //   message: 'Please choose a component library',
-  //   default: 'jpass',
-  //   choices: ['jpass', 'vant-weapp'],
-  // },
-  // {
-  //   type: 'list',
-  //   name: 'cssPrecompiledType',
-  //   message: 'Please choose a css precompiled type',
-  //   default: 'Sass',
-  //   choices: ['Sass', 'Less'],
-  // },
-  // {
-  //   type: 'confirm',
-  //   name: 'esLint',
-  //   message: 'Use eslint to lint your code?',
-  //   default: true,
-  // },
+  {
+    type: 'input',
+    name: 'projectName',
+    message: '请输入项目名称',
+    validate(input) {
+      if (!isProjectName(input)) {
+        return '项目名称格式错误'
+      }
+      return true
+    },
+  },
+  {
+    type: 'input',
+    name: 'projectDescription',
+    message: '请输入项目描述',
+    defualt: '',
+  },
+  {
+    type: 'input',
+    name: 'author',
+    message: '请输入作者',
+    defualt: '',
+  },
+  {
+    type: 'input',
+    name: 'appId',
+    message: '请输入小程序appId',
+    validate(input) {
+      if (!isAppId(input)) {
+        return 'appId格式错误'
+      }
+      return true
+    },
+  },
+  {
+    type: 'list',
+    name: 'libVersion',
+    message: '请选择微信小程序开发者工具的基础库版本',
+    choices: ['2.15.0', '2.14.4', '2.14.3', '2.14.1', '2.14.0'],
+    default: '2.15.0',
+  },
+  {
+    type: 'list',
+    name: 'componentLibrary',
+    message: '请选择一个组件库',
+    default: 'jpass',
+    choices: ['jpass', 'vant-weapp'],
+  },
+  {
+    type: 'list',
+    name: 'cssPrecompiledType',
+    message: '请选择一个css预编译类型',
+    default: 'Sass',
+    choices: ['Sass', 'Less'],
+  },
+  {
+    type: 'confirm',
+    name: 'esLint',
+    message: '是否启用Eslint进行代码校验?',
+    default: true,
+  },
   {
     type: 'confirm',
     name: 'isOk',
-    message: 'Is this OK?',
+    message: '你确定好了吗?',
     default: true,
   },
 ]
@@ -83,12 +83,11 @@ Program.action(() => {
       if (answer.isOk) {
         await init(answer)
       } else {
-        logger.error('you canceled the operation, please try again')
+        logger.error('你取消了操作，请重试')
       }
     })
     .catch((error) => {
-      logger.error('init error, please try again')
-      console.log(error)
+      logger.error(error.stack)
     })
 })
 

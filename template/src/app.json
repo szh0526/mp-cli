@@ -4,6 +4,21 @@
     "pages/home/home",
     "pages/personal/personal"
   ],
+  "subPackages":[{
+    "root": "pages/userModule/",
+    "name": "userModule",
+    "pages": [
+      "index/index",
+      "child/child"
+    ]
+  },{
+    "root": "pages/utilModule/",
+    "name": "utilModule",
+    "pages": [
+      "index/index",
+      "child/child"
+    ]
+  }],
   "usingComponents": {},
   "window":{
     "backgroundTextStyle": "dark",

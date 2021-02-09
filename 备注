@@ -1,94 +1,10 @@
-
-初始化项目目录
-1.小程序样式
-
-2.小程序iconfont
-iconfont.wxss
-jd字体库等等
-
-
-3.小程序组件库 
-   1）iPhoneX安全区域组件 https://blog.csdn.net/sinat_24946363/article/details/105181622
-4.小程序工具类（埋点, api模型，日志采集，util, moment, request等）
-5.基础文件目录
-
-目录(目录结构图等init命令最终完成后出)
-
-| 目录        | 名称 | 说明         |
-|------------|----|------------|
-| models     | 模型 | API请求接口层目录 |
-| pages      | 页面 | 小程序页面目录    |
-
-
-|- app.js  工程入口
-|- app.json  小程序原生配置
-|- app.wxss  部分公共样式 
-|- doc 项目相关文档 
-|- src 源码目录
-|- asserts 静态资源
-|- mock mock 服务
-|- behaviors 行为 组件间代码共享,类似于mixin
-|- burry  埋点 子午线埋点
-|- components 自定义组件 业务组件，积理组件,基础组件
-|- config  环境配置 域名配置
-|- lib 项目插件类（sdk）
-|- pages 小程序页面目录
-|- pages/xxx/components  适配当期页面组件
-|- pages/xxx/service  适配当期页面服务
-|- service/index  公共的一些api存放(common),API请求接口层目录
-|- store     状态管理
-|- utils     工具类目录
-|- wx.config.js  mp工程初始配置
-
-pages (index（index.js,index.json,index.wxml,index.wxss） , default 默认模版)
-app.js(实现部分逻辑)
-app.json(初始化 首页，我的2个tabbar 并配置图片)
-app.wxss(初始化小程序公共样式，字体库等等)
-project.config.json
-sitemap.json
-
-是否需要第三方
-ext.json
-
-
 lint 是否需要lint
 .eslintrc.js
 prettier 是否需要
-
-.gitignore
-config.js 初始化全局配置（根据环境切换）
-
-README.md(实现基础的操作文档)
 
 mp.config.js(mp-cli自定义配置文件)
 
 mock (index.json)
 
-
-初始化npm package.json
-
-package name: (test-mp) 
-version: (1.0.0) 
-description: 
-entry point: (app.js) 
-test command: 
-git repository: 
-keywords: 
-author: 
-license: (ISC) 
-About to write to /Users/sunzehao3/Documents/demo/test-mp/package.json:
-
-{
-  "name": "test-mp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
-}
-
-
-Is this OK? (yes) 
+小程序命令行 V2
+https://developers.weixin.qq.com/miniprogram/dev/devtools/cli.html#%E8%87%AA%E5%8A%A8%E9%A2%84%E8%A7%88

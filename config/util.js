@@ -2,7 +2,7 @@
  * mp 命令行工具暴露配置文件工具类
  */
 const path = require('path')
-const file = require('../src/lib/file')
+const file = require('../lib/file')
 
 module.exports = {
   /**

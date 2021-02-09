@@ -1,0 +1,225 @@
+#!/usr/bin/env node
+const path = require('path')
+const Program = require('commander')
+const inquirer = require('inquirer')
+const fuzzy = require('fuzzy')
+const file = require('../lib/file')
+const logger = require('../lib/logger.js')
+const { templateRoot } = require('../config')
+const { isEnFileName, isCnFileName } = require('../lib/validate')
+const { createPage, createComponent } = require('../scripts/create/index')
+
+// 注册插件
+inquirer.registerPrompt(
+  'autocomplete',
+  require('@moyuyc/inquirer-autocomplete-prompt'),
+)
+
+// 小程序页面配置
+const option = {
+  // 小程序项目app.json
+  appJson: '',
+
+  // 小程序所有分包页面
+  appModuleList: {},
+
+  // 小程序所有页面
+  appPagesList: {},
+}
+
+const createPrompt = [
+  // 选择模式使用 page -> 创建页面 | component -> 创建组件
+  {
+    type: 'list',
+    name: 'mode',
+    message: '请选择模版类型',
+    default: 'page',
+    choices: ['page', 'component'],
+  },
+  // 设置名称
+  {
+    type: 'input',
+    name: 'name',
+    message: (answer) => `设置 ${answer.mode} 的名字 (e.g: index)`,
+    validate(input) {
+      const done = this.async()
+      if (input === '') {
+        done('名称不能为空')
+        return
+      }
+
+      // 校验文件名是否符合规范
+      if (isEnFileName(input) || isCnFileName(input)) {
+        done('文件名不符合规范')
+        return
+      }
+
+      done(null, true)
+    },
+  },
+  // 设置page所属module
+  {
+    type: 'autocomplete',
+    name: 'modulePath',
+    message: '设置页面所属的分包',
+    choices: [],
+    suggestOnly: false,
+    source(answers, input) {
+      return Promise.resolve(
+        fuzzy
+          .filter(input, ['none', ...Object.keys(option.appModuleList)])
+          .map((el) => el.original),
+      )
+    },
+    filter(input) {
+      if (input === 'none') {
+        return ''
+      }
+      return option.appModuleList[input]
+    },
+    when(answer) {
+      return answer.mode === 'page'
+    },
+  },
+
+  // 选择组件作用域
+  {
+    type: 'list',
+    name: 'componentScope',
+    message: '设置组件所属的作用域',
+    default: 'global',
+    choices: ['global', 'module', 'page'],
+    when(answer) {
+      return answer.mode === 'component'
+    },
+  },
+
+  // 当组件作用域为module 设置该组件所属的分包
+  {
+    type: 'autocomplete',
+    name: 'parentModule',
+    message: '设置组件所属的分包',
+    choices: [],
+    suggestOnly: false,
+    source(answers, input) {
+      return Promise.resolve(
+        fuzzy
+          .filter(input, Object.keys(option.appModuleList))
+          .map((el) => el.original),
+      )
+    },
+    filter(input) {
+      if (input === 'none') {
+        return ''
+      }
+      return option.appModuleList[input]
+    },
+    when(answer) {
+      return answer.mode === 'component' && answer.componentScope === 'module'
+    },
+  },
+
+  // 当组件作用域为page 设置该组件所属pages
+  {
+    type: 'autocomplete',
+    name: 'parentPage',
+    message: '设置组件所属的页面',
+    choices: [],
+    suggestOnly: false,
+    source(answers, input) {
+      return Promise.resolve(
+        fuzzy
+          .filter(input, Object.keys(option.appModuleList))
+          .map((el) => el.original),
+      )
+    },
+    filter(input) {
+      if (input === 'none') {
+        return ''
+      }
+      return { page: input, root: option.appPagesList[input] }
+    },
+    when(answer) {
+      return answer.mode === 'component' && answer.componentScope === 'page'
+    },
+  },
+]
+
+// 获取文件名/模块名
+function getPathSubSting(src, root) {
+  let result = ''
+  const arr = src.split('/')
+  const rootArr = root ? root.split('/') : null
+  for (let i = arr.length; i > 0; i -= 1) {
+    if (arr[i]) {
+      if (rootArr) {
+        result = `${rootArr[rootArr.length - 1]}/${arr[i]}`
+      } else {
+        result = arr[i]
+      }
+      break
+    }
+  }
+  return result
+}
+
+// 解析appjson
+const parseAppJson = () => {
+  try {
+    // app Json 原文件
+    // const appJsonRoot = path.join('./', 'app.json')
+    const appJsonRoot = path.join(templateRoot, 'app.json')
+    const appJson = file.readFileSync(appJsonRoot)
+
+    if (appJson) {
+      option.appJson = JSON.parse(appJson)
+      const { pages = [], subPackages = [] } = option.appJson
+
+      // 获取主包页面
+      if (Array.isArray(pages)) {
+        pages.forEach((src) => {
+          option.appPagesList[getPathSubSting(src)] = ''
+        })
+      }
+
+      // 获取分包，页面列表
+      if (Array.isArray(subPackages)) {
+        subPackages.forEach((item) => {
+          option.appModuleList[getPathSubSting(item.root)] = item.root
+          item.pages.forEach((src) => {
+            option.appPagesList[getPathSubSting(src)] = item.root
+          })
+        })
+      }
+
+      console.log(option)
+    } else {
+      logger.error(
+        `未找到app.json, 请检查当前文件目录是否正确，path: ${appJsonRoot}`,
+      )
+      // 异常退出
+      process.exit(1)
+    }
+  } catch (error) {
+    logger.error(error)
+  }
+}
+
+Program.action(() => {
+  parseAppJson()
+
+  inquirer
+    .prompt(createPrompt)
+    .then(async (answer) => {
+      if (answer.mode === 'page') {
+        await createPage()
+      } else if (answer.mode === 'component') {
+        await createComponent()
+      }
+    })
+    .catch((error) => {
+      logger.error(error.stack)
+    })
+})
+
+Program.parse(process.argv)

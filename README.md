@@ -48,7 +48,7 @@
 - [x] icon font 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
 - [x] UI组件库选择（有赞 vant-weapp,全渠道风格组件库,无）
 - [x] Less/Sass css预编译
-- [x] ESlint支持,Prettier代码美化  统一代码风格，质量保证
+- [x] ESlint支持,Prettier代码美化  统一代码风格，代码质量保证
 - [x] ES6 兼容性 （async / await）
 - [x] dev / test / pre / prod 多环境配置（开发版，体验版，生产）
 - [x] mock 服务（npm包读取项目指定目录json文件，可以配置 --port 和 --host）
@@ -106,10 +106,11 @@ Options:
 测试
 
 # **参考文献**
-* [命令行工具-commander](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md)
-* [命令行交互工具-inquirer](https://www.npmjs.com/package/inquirer)
+* [解析命令行命令和参数工具-commander](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md)
+* [常用交互式命令行用户界面的集合-inquirer](https://www.npmjs.com/package/inquirer)
 * [终端loading-ora](https://www.npmjs.com/package/ora)
-* [终端输入自定义颜色插件-chalk](https://www.npmjs.com/package/chalk)
+* [美化你的终端输出样式-chalk](https://www.npmjs.com/package/chalk)
+* [字符串模糊匹配的插件-fuzzy](https://www.npmjs.com/package/fuzzy)
 * [小程序开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/)
 * [自动化构建工具](https://www.npmjs.com/package/gulp)
 
