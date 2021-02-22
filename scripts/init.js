@@ -6,7 +6,7 @@ const path = require('path')
 const chalk = require('chalk')
 const logger = require('../lib/logger')
 const file = require('../lib/file')
-const { cwd, templateRoot } = require('../config')
+const { cwd, srcTemplateRoot } = require('../config')
 
 async function init(answer) {
   try {
@@ -32,7 +32,7 @@ async function init(answer) {
     const projectRoot = path.join(cwd, projectName)
 
     // 复制模版文件到指定目录下
-    file.copyFolder(templateRoot, projectRoot, async (err) => {
+    file.copyFolder(srcTemplateRoot, projectRoot, async (err) => {
       if (err) {
         console.log(err)
       }

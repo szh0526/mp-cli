@@ -2,7 +2,10 @@ const path = require('path')
 
 const cwd = process.cwd()
 const rootDir = path.join(__dirname, '../')
-const templateRoot = path.join(rootDir, 'template/src')
+const templateRoot = path.join(rootDir, 'template')
+const srcTemplateRoot = path.join(templateRoot, 'src')
+const pageTemplateRoot = path.join(templateRoot, 'page')
+const componentTemplateRoot = path.join(templateRoot, 'component')
 
 module.exports = {
 
@@ -15,6 +18,12 @@ module.exports = {
   // 执行命令目录路径
   cwd,
 
-  // 小程序模版目录
-  templateRoot,
+  // 小程序项目模版目录
+  srcTemplateRoot,
+
+  // 小程序page模版目录
+  pageTemplateRoot,
+
+  // 小程序组件模板目录
+  componentTemplateRoot,
 }

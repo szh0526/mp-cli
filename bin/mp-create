@@ -5,7 +5,7 @@ const inquirer = require('inquirer')
 const fuzzy = require('fuzzy')
 const file = require('../lib/file')
 const logger = require('../lib/logger.js')
-const { templateRoot } = require('../config')
+const { srcTemplateRoot, cwd } = require('../config')
 const { isEnFileName, isCnFileName } = require('../lib/validate')
 const { createPage, createComponent } = require('../scripts/create/index')
 
@@ -129,7 +129,7 @@ const createPrompt = [
     source(answers, input) {
       return Promise.resolve(
         fuzzy
-          .filter(input, Object.keys(option.appModuleList))
+          .filter(input, Object.keys(option.appPagesList))
           .map((el) => el.original),
       )
     },
@@ -167,8 +167,8 @@ function getPathSubSting(src, root) {
 const parseAppJson = () => {
   try {
     // app Json 原文件
-    // const appJsonRoot = path.join('./', 'app.json')
-    const appJsonRoot = path.join(templateRoot, 'app.json')
+    const appJsonRoot = path.join(cwd, 'app.json')
+    // const appJsonRoot = path.join(srcTemplateRoot, 'app.json')
     const appJson = file.readFileSync(appJsonRoot)
 
     if (appJson) {
@@ -192,7 +192,7 @@ const parseAppJson = () => {
         })
       }
 
-      console.log(option)
+      // console.log(option)
     } else {
       logger.error(
         `未找到app.json, 请检查当前文件目录是否正确，path: ${appJsonRoot}`,
@@ -202,6 +202,7 @@ const parseAppJson = () => {
     }
   } catch (error) {
     logger.error(error)
+    process.exit(1)
   }
 }
 
@@ -212,13 +213,14 @@ Program.action(() => {
     .prompt(createPrompt)
     .then(async (answer) => {
       if (answer.mode === 'page') {
-        await createPage()
+        await createPage(answer, option)
       } else if (answer.mode === 'component') {
-        await createComponent()
+        await createComponent(answer, option)
       }
     })
     .catch((error) => {
       logger.error(error.stack)
+      process.exit(1)
     })
 })
 

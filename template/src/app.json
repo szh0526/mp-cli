@@ -8,16 +8,9 @@
     "root": "pages/userModule/",
     "name": "userModule",
     "pages": [
-      "index/index",
-      "child/child"
-    ]
-  },{
-    "root": "pages/utilModule/",
-    "name": "utilModule",
-    "pages": [
-      "index/index",
-      "child/child"
-    ]
+      "pages/index/index"
+    ],
+    "independent":false
   }],
   "usingComponents": {},
   "window":{

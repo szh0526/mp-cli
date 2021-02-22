@@ -72,7 +72,7 @@ const initPrompt = [
   {
     type: 'confirm',
     name: 'isOk',
-    message: '你确定好了吗?',
+    message: '确定执行以上操作？',
     default: true,
   },
 ]
@@ -88,6 +88,7 @@ Program.action(() => {
     })
     .catch((error) => {
       logger.error(error.stack)
+      process.exit(1)
     })
 })
 
