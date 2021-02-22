@@ -18,10 +18,10 @@ module.exports = {
   // 执行命令目录路径
   cwd,
 
-  // 小程序项目模版目录
+  // 小程序项目模板目录
   srcTemplateRoot,
 
-  // 小程序page模版目录
+  // 小程序page模板目录
   pageTemplateRoot,
 
   // 小程序组件模板目录

@@ -32,7 +32,7 @@ const createPrompt = [
   {
     type: 'list',
     name: 'mode',
-    message: '请选择模版类型',
+    message: '请选择模板类型',
     default: 'page',
     choices: ['page', 'component'],
   },
@@ -215,7 +215,7 @@ Program.action(() => {
       if (answer.mode === 'page') {
         await createPage(answer, option)
       } else if (answer.mode === 'component') {
-        await createComponent(answer, option)
+        await createComponent(answer)
       }
     })
     .catch((error) => {

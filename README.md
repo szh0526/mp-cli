@@ -44,7 +44,7 @@
 
 # **Feature**
 - [x] init 项目目录初始化 
-- [x] page/components 模版文件创建 （pages支持多级目录）
+- [x] page/components 模板文件创建 （pages支持多级目录）
 - [x] icon font 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
 - [x] UI组件库选择（有赞 vant-weapp,全渠道风格组件库,无）
 - [x] Less/Sass css预编译

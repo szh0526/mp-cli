@@ -3,7 +3,7 @@ const Program = require('commander')
 
 Program
   // .name('mp build')
-  // .option('-n,--name,项目目录')
+  .option('-n,--name,项目目录')
   .action((action) => {
     console.log(action)
   })

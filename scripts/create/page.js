@@ -17,7 +17,7 @@ async function writePageToAppJson(name, modulePath = '', option) {
     // 当前页面所在位置
     const idx = Object.values(option.appModuleList).indexOf(modulePath)
     if (idx === -1) {
-      logger.error(`app.json不存在当前module, path: ${modulePath}`)
+      logger.error(`app.json不存在当前分包, path: ${modulePath}`)
       return
     }
     appJson.subPackages[idx].pages.push(`pages/${name}/${name}`)
@@ -26,16 +26,22 @@ async function writePageToAppJson(name, modulePath = '', option) {
   // 重写app.json
   const appJsonRoot = path.join(cwd, 'app.json')
 
-  await file.writeFile(
+  const result = await file.writeFile(
     appJsonRoot,
     JSON.stringify(appJson, null, '\t'),
   )
+
+  if (!result) {
+    logger.error('自动写入app.json文件失败, 请手动填写, 并检查错误 \r\n')
+  }
 }
 
 async function createPage(answer, option) {
   try {
     if (!file.existsSync(pageTemplateRoot)) {
-      logger.error(`未找到模版文件, 请检查当前文件目录是否正确，path: ${pageTemplateRoot}`)
+      logger.error(
+        `未找到页面模板文件, 请检查当前文件目录是否正确, path: ${pageTemplateRoot}`,
+      )
       return
     }
 
@@ -46,11 +52,11 @@ async function createPage(answer, option) {
 
     // 查看文件夹是否存在
     if (file.existsSync(newPageRoot)) {
-      logger.error(`当前页面已存在，请重新确认, path: ${newPageRoot}`)
+      logger.error(`当前页面已存在, 请重新确认, path: ${newPageRoot}`)
       return
     }
 
-    // 复制模版文件到指定目录下
+    // 复制模文件到指定目录下
     file.copyFolder(pageTemplateRoot, newPageRoot, async (err) => {
       if (err) {
         console.log(err)
@@ -62,7 +68,7 @@ async function createPage(answer, option) {
       await writePageToAppJson(name, modulePath, option)
 
       logger.clear()
-      logger.success(` 🚀 Page created successfully , path: ${newPageRoot} \r\n`)
+      logger.success(` 🚀 页面创建成功, path: ${newPageRoot} \r\n`)
     })
   } catch (e) {
     logger.error(e.stack)
