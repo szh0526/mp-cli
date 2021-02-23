@@ -146,17 +146,13 @@ const createPrompt = [
 ]
 
 // 获取文件名/模块名
-function getPathSubSting(src, root) {
+function getPathSubSting(src) {
   let result = ''
   const arr = src.split('/')
-  const rootArr = root ? root.split('/') : null
   for (let i = arr.length; i > 0; i -= 1) {
+    console.log(src, arr[i])
     if (arr[i]) {
-      if (rootArr) {
-        result = `${rootArr[rootArr.length - 1]}/${arr[i]}`
-      } else {
-        result = arr[i]
-      }
+      result = arr[i]
       break
     }
   }
@@ -185,9 +181,9 @@ const parseAppJson = () => {
       // 获取分包，页面列表
       if (Array.isArray(subPackages)) {
         subPackages.forEach((item) => {
-          option.appModuleList[getPathSubSting(item.root)] = item.root
+          option.appModuleList[item.root] = item.root
           item.pages.forEach((src) => {
-            option.appPagesList[getPathSubSting(src)] = item.root
+            option.appPagesList[`${getPathSubSting(src)}`] = item.root
           })
         })
       }

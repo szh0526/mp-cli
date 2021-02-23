@@ -5,8 +5,8 @@
     "pages/personal/personal"
   ],
   "subPackages":[{
-    "root": "pages/userModule/",
-    "name": "userModule",
+    "root": "subPackages",
+    "name": "subPackages",
     "pages": [
       "pages/index/index"
     ],

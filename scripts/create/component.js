@@ -56,7 +56,6 @@ async function createComponent(answer) {
         name,
       ),
     }[componentScope]()
-    console.log(componentScope, newComponentRoot[componentScope], newComponentRoot)
 
     // 查看文件夹是否存在
     if (file.existsSync(newComponentRoot)) {
