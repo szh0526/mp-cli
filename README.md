@@ -45,7 +45,7 @@
 # **Feature**
 - [x] init 项目目录初始化 
 - [x] page/components 模板文件创建 （pages支持多级目录）
-- [x] icon font 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
+- [x] IconFont 字体图标（阿里 IconFont下载图标SVG图片,带一个demo）
 - [x] UI组件库选择（有赞 vant-weapp,全渠道风格组件库,无）
 - [x] Less/Sass css预编译
 - [x] ESlint支持,Prettier代码美化  统一代码风格，代码质量保证
@@ -113,6 +113,7 @@ Options:
 * [字符串模糊匹配的插件-fuzzy](https://www.npmjs.com/package/fuzzy)
 * [小程序开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/)
 * [自动化构建工具](https://www.npmjs.com/package/gulp)
+* [node的spawn和spawnSync的跨平台解决方案](https://www.npmjs.com/package/cross-spawn)
 
 
 # **开发人员**

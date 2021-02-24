@@ -6,6 +6,7 @@ const path = require('path')
 const chalk = require('chalk')
 const logger = require('../lib/logger')
 const file = require('../lib/file')
+const { spawnSync } = require('../lib/cross-spawn')
 const { cwd, srcTemplateRoot } = require('../config')
 
 async function init(answer) {
@@ -18,8 +19,10 @@ async function init(answer) {
       author = '',
       appId = '',
       libVersion = '',
-      componentLibrary = '',
-      cssPrecompiledType = '',
+      componentLibrary,
+      vantWeappVersion,
+      jpassVersion,
+      cssPrecompiledType,
       esLint = true,
     } = answer
 
@@ -46,6 +49,14 @@ async function init(answer) {
         config.projectname = projectName
         config.libVersion = libVersion
         config.description = projectDescription
+        // // npm构建 参考 https://vant-contrib.gitee.io/vant-weapp/#/quickstart#qi-ta
+        // // npm构建 只会把dependencies下的依赖打包到miniprogram_npm下
+        // config.setting.packNpmManually = true
+        // config.setting.packNpmRelationList = [{
+        //   packageJsonPath: './package.json',
+        //   miniprogramNpmDistDir: './',
+        // }]
+
         await file.writeFile(
           projectConfigRoot,
           JSON.stringify(config, null, '\t'),
@@ -62,11 +73,24 @@ async function init(answer) {
         config.description = projectDescription
         config.author = author
 
+        logger.info('开始安装依赖...')
+
+        // 安装eslint依赖
         if (esLint) {
-          config.devDependencies.eslint = '^6.7.2'
-          config.devDependencies['eslint-config-airbnb-base'] = '^14.0.0'
-          config.devDependencies['eslint-plugin-import'] = '^2.18.2'
+          spawnSync('npm', ['install', '-g', 'eslint@6.7.2', 'eslint-config-airbnb-base@14.0.0', 'eslint-plugin-import@2.18.2'])
         }
+
+        // 安装组件库依赖
+        if (componentLibrary === 'jpass') {
+          logger.warn(` 🔥 jpass v${jpassVersion} 组件库正在开发中, 敬请期待...`)
+        } else if (componentLibrary === 'vant-weapp') {
+          if (vantWeappVersion === 'v2') {
+            spawnSync('npm', ['install', '--save', '@vant/weapp'])
+          } else {
+            spawnSync('npm', ['install', '--save', 'vant-weapp'])
+          }
+        }
+        logger.success('依赖安装完成')
 
         await file.writeFile(
           packageJsonRoot,

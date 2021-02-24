@@ -1,4 +1,4 @@
-const { logger } = getApp()
+const logger = require('./utils/logger/index')
 
 /**
  * 全局配置

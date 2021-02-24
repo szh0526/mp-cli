@@ -58,6 +58,26 @@ const initPrompt = [
   },
   {
     type: 'list',
+    name: 'vantWeappVersion',
+    message: '请选择vant-weapp组件库版本',
+    choices: ['v2', 'v1'],
+    default: 'v2',
+    when(answer) {
+      return answer.componentLibrary === 'vant-weapp'
+    },
+  },
+  {
+    type: 'list',
+    name: 'jpassVersion',
+    message: '请选择jpass组件库版本',
+    choices: ['1.0.0'],
+    default: '1.0.0',
+    when(answer) {
+      return answer.componentLibrary === 'jpass'
+    },
+  },
+  {
+    type: 'list',
     name: 'cssPrecompiledType',
     message: '请选择一个css预编译类型',
     default: 'Sass',
