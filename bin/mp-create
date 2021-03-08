@@ -150,7 +150,7 @@ function getPathSubSting(src) {
   let result = ''
   const arr = src.split('/')
   for (let i = arr.length; i > 0; i -= 1) {
-    console.log(src, arr[i])
+    // console.log(src, arr[i])
     if (arr[i]) {
       result = arr[i]
       break

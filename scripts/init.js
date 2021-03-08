@@ -6,8 +6,9 @@ const path = require('path')
 const chalk = require('chalk')
 const logger = require('../lib/logger')
 const file = require('../lib/file')
+const buildNpm = require('./build-npm')
 const { spawnSync } = require('../lib/cross-spawn')
-const { cwd, srcTemplateRoot } = require('../config')
+const { cwd, srcTemplateRoot, userConfigTemplate } = require('../config')
 
 async function init(answer) {
   try {
@@ -34,6 +35,9 @@ async function init(answer) {
 
     const projectRoot = path.join(cwd, projectName)
 
+    // 复制用户自定义配置文件到项目根目录中
+    await file.copyFileToPath(userConfigTemplate, path.join(projectRoot, 'mp.config.js'))
+
     // 复制模板文件到指定目录下
     file.copyFolder(srcTemplateRoot, projectRoot, async (err) => {
       if (err) {
@@ -51,11 +55,11 @@ async function init(answer) {
         config.description = projectDescription
         // // npm构建 参考 https://vant-contrib.gitee.io/vant-weapp/#/quickstart#qi-ta
         // // npm构建 只会把dependencies下的依赖打包到miniprogram_npm下
-        // config.setting.packNpmManually = true
-        // config.setting.packNpmRelationList = [{
-        //   packageJsonPath: './package.json',
-        //   miniprogramNpmDistDir: './',
-        // }]
+        config.setting.packNpmManually = true
+        config.setting.packNpmRelationList = [{
+          packageJsonPath: './package.json',
+          miniprogramNpmDistDir: './',
+        }]
 
         await file.writeFile(
           projectConfigRoot,
@@ -72,12 +76,15 @@ async function init(answer) {
         config.name = projectName
         config.description = projectDescription
         config.author = author
+        config.miniprogram = 'npm'
 
         logger.info('开始安装依赖...')
 
         // 安装eslint依赖
         if (esLint) {
-          spawnSync('npm', ['install', '-g', 'eslint@6.7.2', 'eslint-config-airbnb-base@14.0.0', 'eslint-plugin-import@2.18.2'])
+          config.devDependencies.eslint = '^6.7.2'
+          config.devDependencies['eslint-config-airbnb-base'] = '^14.0.0'
+          config.devDependencies['eslint-plugin-import'] = '^2.18.2'
         }
 
         // 安装组件库依赖
@@ -85,17 +92,21 @@ async function init(answer) {
           logger.warn(` 🔥 jpass v${jpassVersion} 组件库正在开发中, 敬请期待...`)
         } else if (componentLibrary === 'vant-weapp') {
           if (vantWeappVersion === 'v2') {
-            spawnSync('npm', ['install', '--save', '@vant/weapp'])
+            config.dependencies['@vant/weapp'] = '^1.5.3'
           } else {
-            spawnSync('npm', ['install', '--save', 'vant-weapp'])
+            config.dependencies['vant-weapp'] = '^0.5.29'
           }
         }
-        logger.success('依赖安装完成')
 
         await file.writeFile(
           packageJsonRoot,
           JSON.stringify(config, null, '\t'),
         )
+
+        spawnSync('npm', ['install', '--save'], { cwd: projectRoot })
+        const userConfig = path.join(projectRoot, 'mp.config.js')
+
+        buildNpm(userConfig, projectRoot)
       }
 
       setTimeout(() => {

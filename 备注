@@ -8,3 +8,16 @@ mock (index.json)
 
 小程序命令行 V2
 https://developers.weixin.qq.com/miniprogram/dev/devtools/cli.html#%E8%87%AA%E5%8A%A8%E9%A2%84%E8%A7%88
+
+
+//接入小程序cli  commander解析小程序cli 命令
+
+//初始化项目
+git init 
+git remote add origin https://git.jd.com/wjfe/mp-jthd.git
+git checkout -f master
+git branch <branch名称>
+git checkout -f <branch名称>
+git add .
+git commit -m '初始化项目'
+git push

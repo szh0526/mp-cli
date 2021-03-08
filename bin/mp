@@ -29,7 +29,7 @@ const VALID_COMMAND = [
   '--version', '-v',
   'init', 'i',
   'build', 'b',
-  'new', 'n',
+  'create', 'n',
   'preview', 'p',
   'audit', 'a',
   'config', 'c',

@@ -1,13 +1,29 @@
 const path = require('path')
 
 const cwd = process.cwd()
+const { platform } = process
+const isWin = /^win/.test(platform)
+const isMac = /^darwin/.test(platform)
 const rootDir = path.join(__dirname, '../')
 const templateRoot = path.join(rootDir, 'template')
 const srcTemplateRoot = path.join(templateRoot, 'src')
 const pageTemplateRoot = path.join(templateRoot, 'page')
 const componentTemplateRoot = path.join(templateRoot, 'component')
+const userConfigTemplate = path.join(templateRoot, 'mp.config.js')
+const cli = '/Applications/wechatwebdevtools.app/Contents/MacOS/cli'
 
 module.exports = {
+  // 操作系统
+  platform,
+
+  // 是否Windows系统
+  isWin,
+
+  // 是否MacOS系统
+  isMac,
+
+  // 小程序CLI工具安装路径
+  cli,
 
   // __dirname node全局变量，获得当前文件所在目录的完整目录名
   __dirname,
@@ -17,6 +33,9 @@ module.exports = {
 
   // 执行命令目录路径
   cwd,
+
+  // 用户自定义配置模板
+  userConfigTemplate,
 
   // 小程序项目模板目录
   srcTemplateRoot,
