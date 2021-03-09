@@ -10,7 +10,7 @@ const srcTemplateRoot = path.join(templateRoot, 'src')
 const pageTemplateRoot = path.join(templateRoot, 'page')
 const componentTemplateRoot = path.join(templateRoot, 'component')
 const userConfigTemplate = path.join(templateRoot, 'mp.config.js')
-const cli = '/Applications/wechatwebdevtools.app/Contents/MacOS/cli'
+const wxcli = isWin ? 'D:\\Program Files (x86)\\Tencent\\微信web开发者工具\\cli.bat' : '/Applications/wechatwebdevtools.app/Contents/MacOS/cli'
 
 module.exports = {
   // 操作系统
@@ -23,7 +23,7 @@ module.exports = {
   isMac,
 
   // 小程序CLI工具安装路径
-  cli,
+  wxcli,
 
   // __dirname node全局变量，获得当前文件所在目录的完整目录名
   __dirname,

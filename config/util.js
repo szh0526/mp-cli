@@ -21,7 +21,7 @@ module.exports = {
     const configPath = path.join(cwd, 'mp.config.js')
     if (!file.existsSync(configPath)) {
       if (level === 2) {
-        logger.error('当前项目尚未创建mp.config.js文件')
+        logger.error('当前项目下未找到mp.config.js文件，请检查执行命令目录路径')
         return process.exit(1)
       }
       return null

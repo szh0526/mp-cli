@@ -6,7 +6,7 @@ const path = require('path')
 const chalk = require('chalk')
 const logger = require('../lib/logger')
 const file = require('../lib/file')
-const buildNpm = require('./build-npm')
+const { buildNpm } = require('./wxcli/index')
 const { spawnSync } = require('../lib/cross-spawn')
 const { cwd, srcTemplateRoot, userConfigTemplate } = require('../config')
 
@@ -106,7 +106,7 @@ async function init(answer) {
         spawnSync('npm', ['install', '--save'], { cwd: projectRoot })
         const userConfig = path.join(projectRoot, 'mp.config.js')
 
-        buildNpm(userConfig, projectRoot)
+        buildNpm(userConfig.wxcli, projectRoot)
       }
 
       setTimeout(() => {

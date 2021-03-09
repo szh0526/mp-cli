@@ -20,6 +20,19 @@ Program
   .command('upload', '上传')
   .alias('u')
 
+// // 自定义指令
+// Program
+//   .command('run <cmd>')
+//   .description('当前<cmd>包含')
+//   .action(async (cmd, options) => {
+//     console.log('自定义命令', cmd, options)
+//     // // 当前命令
+//     // const curScript = getUserConf().customScripts.find((el, idx) => el.name === cmd)
+
+//     // // 执行回调
+//     // await curScript.callback.call(originPrototype, cmd, options)
+//   })
+
 Program.parse(process.argv)
 
 // 命令校验
