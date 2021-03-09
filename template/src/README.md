@@ -79,3 +79,7 @@
 ├── README.md 项目说明
 └── sitemap.json
 ```
+## 开发人员
+| 姓名 | ERP | 职位 |
+| :--- | :--- | :--- |
+| 孙则浩 | sunzehao3<a href="timline://chat/?topin=sunzehao3" title="联系咚咚"><img src="https://king.jd.com/common/img/dongdong.png"></a> | 前端开发工程师岗 |

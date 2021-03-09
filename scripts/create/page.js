@@ -26,14 +26,10 @@ async function writePageToAppJson(name, modulePath = '', option) {
   // 重写app.json
   const appJsonRoot = path.join(cwd, 'app.json')
 
-  const result = await file.writeFile(
+  await file.writeFile(
     appJsonRoot,
     JSON.stringify(appJson, null, '\t'),
   )
-
-  if (!result) {
-    logger.error('自动写入app.json文件失败, 请手动填写, 并检查错误 \r\n')
-  }
 }
 
 async function createPage(answer, option) {

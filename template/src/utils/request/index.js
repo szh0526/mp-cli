@@ -1,7 +1,6 @@
 const logger = require('../logger/index')
 const promisify = require('./promisify')
 const { baseUrl } = require('../../config')()
-const { getCurrentFullUrl, getStorageSync, redirectTo } = require('../sdk/wx.sdk')
 
 const wxRequest = promisify(wx.request)
 const CODE_MESSAGE = {
@@ -20,7 +19,7 @@ const CODE_MESSAGE = {
   502: '网关错误。',
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
-  '-1': '系统开了个小差',
+  '-1': '系统开了个小差，请稍后再试',
 }
 
 class HttpRequest {
@@ -56,60 +55,29 @@ class HttpRequest {
 
     if (_statusCode.startsWith('2')) {
       const { code, message } = data
-      if (code === 0) { // 业务成功
+      if (code === '0') { // 业务成功
         return data
-      } if (code >= 20001 && code <= 29999) { // 用户未登陆或其他用户错误
-        this.goLogin()
-      } else if (code !== 1 && code !== 40001) {
-        return data
-      } else {
-        // 业务异常
-        this.throwException(message, code, response)
-        return null
       }
+      // 业务异常
+      this.throwException(message, code, response)
+      return null
     }
     this.throwException(CODE_MESSAGE[_statusCode] || errMsg, _statusCode, response)
     return null
   }
 
-  transApiUrl(opt) {
-    let { url } = opt
-    url = !url.startsWith('/') ? `${baseUrl}/${url}` : `${baseUrl}${url}`
-
-    if (url.indexOf('api=') > -1) {
-      url += '&'
-    } else {
-      url = !url.startsWith('?') ? `${url}?` : `${url}`
-    }
-    return url
-  }
-
   transOptions(opt) {
-    const token = getStorageSync('auth_token')
-
     const method = (opt.method || 'GET').toUpperCase()
-    let { data } = opt
-
-    let url = this.transApiUrl(opt)
-
-    if (method === 'GET') {
-      url += `&body=${encodeURIComponent(JSON.stringify(data))}`
-    } else {
-      data = JSON.stringify(data)
-    }
+    const { data, url } = opt
 
     return {
       method: method || 'GET',
       header: {
-        // 'Content-Type': method === 'POST'
-        //   ? 'application/json; charset=utf-8'
-        //   : 'application/x-www-form-urlencoded; charset=utf-8',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-        cookie: `token=${token}`,
+        'content-type': 'application/json',
       },
       mode: 'no-cors',
       credentials: 'include',
-      url,
+      url: `${baseUrl}/${url}`,
       data,
     }
   }
@@ -121,14 +89,6 @@ class HttpRequest {
       duration: 2000,
     })
     logger.error(error.message, error)
-  }
-
-  goLogin() {
-    const returnUrl = getCurrentFullUrl()
-
-    redirectTo({
-      url: `/pages/login/login?returnUrl=${returnUrl}`,
-    })
   }
 
   get(param) {

@@ -7,13 +7,11 @@ const logger = require('./utils/logger/index')
  */
 module.exports = function () {
   const previewConf = {
-    baseUrl: 'http://wdbgateway-pre.jd.com/app/api',
-    dataSource: '',
+    baseUrl: 'https://beta-kai.jd.com',
   }
 
   const prodConf = {
-    baseUrl: 'https://wdbapi.jd.com/app/api',
-    dataSource: '',
+    baseUrl: 'https://kai.jd.com',
   }
 
   try {
