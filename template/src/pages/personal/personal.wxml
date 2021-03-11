@@ -1,2 +1,2 @@
-<!--pages/personal/personal.wxml-->
-<text>pages/personal/personal.wxml</text>
+<view class="container">
+</view>

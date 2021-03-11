@@ -4,14 +4,22 @@
 /* global style */
 page {
   background-color: #f7f7f7;
-	font-size: 24rpx;
-	color: var(--black);
-	font-family: 'JDZhengHei-01-Regular', Helvetica Neue, Helvetica, sans-serif;
+  font-size: 24rpx;
+  color: var(--black);
+  font-family: "JDZhengHei-01-Regular", Helvetica Neue, Helvetica, sans-serif;
 }
 
 /* iPhoneX适配 */
 .isIphoneX {
   padding-bottom: 68rpx !important;
+}
+.isIphoneX::after {
+  content: " ";
+  position: fixed;
+  bottom: 0 !important;
+  height: 68rpx !important;
+  width: 100%;
+  background: #fff;
 }
 
 /* 清除浮动 */
