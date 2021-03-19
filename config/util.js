@@ -28,6 +28,27 @@ module.exports = {
     }
 
     const config = file.readFileSync(configPath)
-    return JSON.parse(config.toString())
+    return config
+  },
+
+  /**
+   * 获取发布版本文件
+   */
+  async getUploadJsonConfig() {
+    try {
+      const versionJsonPath = path.resolve(cwd, 'release.version.json')
+
+      // 创建版本文件
+      if (!file.existsSync(versionJsonPath)) {
+        await file.writeFile(versionJsonPath, JSON.stringify({ version: '0.0.0', desc: '', size: {} }, null, '\t'))
+      }
+
+      const versionJson = JSON.parse(file.readFileSync(versionJsonPath))
+
+      return versionJson
+    } catch (error) {
+      logger.error('解析release.version.json失败')
+      return process.exit(1)
+    }
   },
 }
