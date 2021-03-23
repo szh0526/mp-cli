@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+const Program = require('commander')
+const { login } = require('../scripts/wxcli/index')
+const { getUserConfig } = require('../config/util.js')
+const { wxcli, cwd } = require('../config')
+
+Program
+  .name('mp login')
+  .option('-f, --qr-format <value>', '二维码格式:terminal|image|base64', 'terminal')
+  .option('-o, --qr-output <value>', '二维码输出路径')
+  .option('-i, --result-output <value>', '登陆结果输出路径')
+  .action(async (answer) => {
+    const userConfig = await getUserConfig()
+    const command = userConfig.wxcli || wxcli
+    login(command, cwd, answer)
+  })
+
+Program.parse(process.argv)

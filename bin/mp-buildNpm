@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 const Program = require('commander')
-const { upload } = require('../scripts/wxcli/index')
+const { buildNpm } = require('../scripts/wxcli/index')
 const { getUserConfig } = require('../config/util.js')
 const { wxcli, cwd } = require('../config')
 
 Program
-  .name('mp upload')
-  .action(async () => {
+  .name('mp-buildNpm')
+  .option('-t, --compile-type <value>', '编译类型:miniprogram|plugin', 'miniprogram')
+  .action(async (answer) => {
     const userConfig = await getUserConfig()
     const command = userConfig.wxcli || wxcli
-    upload(command, cwd)
+    buildNpm(command, cwd, answer)
   })
 
 Program.parse(process.argv)

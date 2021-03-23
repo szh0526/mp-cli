@@ -15,6 +15,10 @@ Program
   .alias('c')
   .command('preview', '预览小程序，生成二维码')
   .alias('p')
+  .command('login', '小程序登陆')
+  .alias('l')
+  .command('buildNpm', '小程序构建npm|plugin')
+  .alias('bn')
   .command('audit', '项目审计')
   .alias('a')
   .command('upload', '上传')
@@ -42,10 +46,11 @@ const VALID_COMMAND = [
   '--version', '-v',
   'init', 'i',
   'build', 'b',
-  'create', 'n',
+  'create', 'c',
   'preview', 'p',
+  'buildNpm', 'bn',
+  'login', 'l',
   'audit', 'a',
-  'config', 'c',
   'upload', 'u',
 ]
 

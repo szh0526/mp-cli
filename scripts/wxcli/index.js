@@ -49,32 +49,38 @@ function getVersionChoices(version) {
  * https://cf.jd.com/pages/viewpage.action?pageId=277303025
  */
 const handleSuccess = (execLog) => {
-  const { stdout, stderr, status } = execLog
-  if (status === 0) return
+  const { stdout, stderr } = execLog
 
-  if (stderr.includes('port timeout')) {
+  if (stderr && stderr.includes('port timeout')) {
     // 实际只有win系统会走到这里，mac系统会走到handleError
     logger.error(MSG_PORT_DISABLE)
   }
 
-  if (stdout.includes('error') && stdout.includes('重新登录')) {
+  if (stdout && stdout.includes('error') && stdout.includes('重新登录')) {
     // 新版，未登录时，win和mac都不会抛出异常，未登录信息会输出到stdout
     logger.error(MSG_NEED_LOGIN)
   }
 
   if (
-    stdout.includes('error')
+    stdout
+    && stdout.includes('error')
     && stdout.includes('project.config.json')
     && stdout.includes('__NO_NODE_MODULES__')
   ) {
     logger.error(MSG_NO_NODE_MODULES)
   }
 
-  if (stdout.includes('error') && stdout.includes('project.config.json')) {
+  if (
+    stdout
+    && stdout.includes('error')
+    && stdout.includes('project.config.json')
+  ) {
     logger.error(MSG_CONFIGFILE_404)
   }
 
-  logger.info(stdout)
+  if (stdout) {
+    logger.info(stdout)
+  }
 }
 
 /**
@@ -96,27 +102,45 @@ const handleError = (error) => {
 /**
  * 小程序登陆
  */
-const login = (command = wxcli, projectRoot) => {
-  const args = []
-  let { resultOutput } = {}
-  const { qrOutput, qrFormat } = {}
+const login = (command = wxcli, projectRoot, options) => {
+  let args = []
+  let { resultOutput, qrOutput } = options
+  const { qrFormat } = options
 
   if (!resultOutput) {
-    resultOutput = path.resolve(projectRoot, 'login-result.json')
+    resultOutput = path.resolve(projectRoot, 'mp.login.json')
   }
 
-  args.concat(['login', '--result-output', resultOutput])
+  args = args.concat([
+    'login',
+    '--project',
+    projectRoot,
+    '--qr-format',
+    qrFormat,
+    '--result-output',
+    resultOutput,
+  ])
 
-  if (qrOutput) {
-    args.concat(['--qr-format', qrFormat || 'base64', '--qr-output', qrOutput])
+  if (!qrOutput && qrFormat !== 'terminal') {
+    qrOutput = path.resolve(projectRoot, 'mp.login.txt')
+    args = args.concat(['--qr-output', qrOutput])
   }
 
-  logger.info('去登陆...')
+  logger.info('微信扫码登陆...')
 
   try {
     checkWxcli(command)
     const execLog = spawnSync(command, args)
     handleSuccess(execLog)
+    const config = JSON.parse(file.readFileSync(resultOutput))
+    if (config.status === 'SUCCESS') {
+      setTimeout(() => {
+        logger.clear()
+        logger.success('扫码登陆成功\r\n')
+      }, 1000)
+    } else {
+      logger.error(`${config.error}\r\n`)
+    }
   } catch (error) {
     handleError(error)
   }
@@ -125,25 +149,28 @@ const login = (command = wxcli, projectRoot) => {
 /**
  * 生成-预览小程序二维码
  */
-const preview = (command = wxcli, projectRoot) => {
-  const args = []
-  let { infoOutput } = {}
-  const { qrOutput, qrFormat, compileCondition } = {}
+const preview = (command = wxcli, projectRoot, options) => {
+  let args = []
+  let { infoOutput, qrOutput } = options
+  const { qrFormat, compileCondition } = options
 
   if (!infoOutput) {
-    infoOutput = path.resolve(projectRoot, 'preview-info.json')
+    infoOutput = path.resolve(projectRoot, 'mp.preview.json')
   }
 
-  args.concat([
+  args = args.concat([
     'preview',
     '--project',
     projectRoot,
+    '--qr-format',
+    qrFormat,
     '--info-output',
     infoOutput,
   ])
 
-  if (qrOutput) {
-    args.concat(['--qr-format', qrFormat || 'base64', '--qr-output', qrOutput])
+  if (!qrOutput) {
+    qrOutput = path.resolve(projectRoot, 'mp.qrcode.txt')
+    args = args.concat(['--qr-output', qrOutput])
   }
 
   if (compileCondition) {
@@ -153,7 +180,7 @@ const preview = (command = wxcli, projectRoot) => {
         `windows系统暂不支持传递启动参数，将忽略:${compileCondition}`,
       )
     } else {
-      args.concat(['--compile-condition', compileCondition])
+      args = args.concat(['--compile-condition', compileCondition])
     }
   }
 
@@ -163,6 +190,12 @@ const preview = (command = wxcli, projectRoot) => {
     checkWxcli(command)
     const execLog = spawnSync(command, args)
     handleSuccess(execLog)
+    setTimeout(() => {
+      if (qrFormat !== 'terminal') {
+        logger.clear()
+      }
+      logger.success('生成预览二维码成功\r\n')
+    }, 1000)
   } catch (error) {
     handleError(error)
   }
@@ -206,7 +239,7 @@ const upload = async (command = wxcli, projectRoot) => {
 
       try {
         checkWxcli(command)
-        const versionConfigPath = path.resolve(projectRoot, 'release.version.json')
+        const versionConfigPath = path.resolve(projectRoot, 'mp.version.json')
 
         const execLog = spawnSync(command, [
           'upload',
@@ -222,20 +255,30 @@ const upload = async (command = wxcli, projectRoot) => {
 
         handleSuccess(execLog)
 
-        // 修改本地版本文件 (当为发行版时)
-        if (isRelease) {
-          const config = JSON.parse(file.readFileSync(versionConfigPath))
-          config.version = newVersion
-          config.desc = desc
-          await file.writeFile(versionConfigPath, JSON.stringify(config, null, '\t'))
-        }
+        if (execLog.status === 0) {
+          setTimeout(async () => {
+            // 修改本地版本文件 (当为发行版时)
+            if (isRelease) {
+              const config = JSON.parse(file.readFileSync(versionConfigPath))
+              config.version = newVersion
+              config.desc = desc
+              console.log(version)
+              await file.writeFile(
+                versionConfigPath,
+                JSON.stringify(config, null, '\t'),
+              )
+            }
 
-        setTimeout(() => {
-          logger.clear()
-          logger.success(
-            '小程序代码上传成功, 登录微信公众平台 【 https://mp.weixin.qq.com 】 获取体验版二维码 \r\n',
+            logger.clear()
+            logger.success(
+              '小程序代码上传成功, 登录微信公众平台 https://mp.weixin.qq.com 获取体验版二维码 \r\n',
+            )
+          }, 1000)
+        } else {
+          logger.error(
+            '小程序代码上传失败, 请重新上传 \r\n',
           )
-        }, 1000)
+        }
       } catch (error) {
         handleError(error)
       }
@@ -249,23 +292,10 @@ const upload = async (command = wxcli, projectRoot) => {
 /**
  * npm构建
  */
-const buildNpm = (command = wxcli, projectRoot) => {
-  logger.info('构建npm...')
-  try {
-    checkWxcli(command)
-    const execLog = spawnSync(command, [
-      'build-npm',
-      '--project',
-      projectRoot,
-      '--compile-type',
-      'miniprogram',
-    ])
-    handleSuccess(execLog)
-  } catch (error) {
-    handleError(error)
-  }
+const buildNpm = (command = wxcli, projectRoot, options) => {
+  const { compileType } = options
+  logger.info(`构建 ${compileType} ...`)
 
-  logger.info('构建plugin...')
   try {
     checkWxcli(command)
     const execLog = spawnSync(command, [
@@ -273,7 +303,7 @@ const buildNpm = (command = wxcli, projectRoot) => {
       '--project',
       projectRoot,
       '--compile-type',
-      'plugin',
+      compileType,
     ])
     handleSuccess(execLog)
   } catch (error) {

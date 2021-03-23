@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+const Program = require('commander')
+const { preview } = require('../scripts/wxcli/index')
+const { getUserConfig } = require('../config/util.js')
+const { wxcli, cwd } = require('../config')
+
+Program
+  .name('mp preview')
+  .option('-f, --qr-format <value>', '二维码格式:terminal|image|base64', 'terminal')
+  .option('-o, --qr-output <value>', '二维码输出路径')
+  .option('-i, --info-output <value>', '预览后的额外信息路径')
+  .option('-c, --compile-condition <value>', '自定义编译条件')
+  .action(async (options) => {
+    const userConfig = await getUserConfig()
+    const command = userConfig.wxcli || wxcli
+    preview(command, cwd, options)
+  })
+
+Program.parse(process.argv)

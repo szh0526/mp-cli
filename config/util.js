@@ -36,7 +36,7 @@ module.exports = {
    */
   async getUploadJsonConfig() {
     try {
-      const versionJsonPath = path.resolve(cwd, 'release.version.json')
+      const versionJsonPath = path.resolve(cwd, 'mp.version.json')
 
       // 创建版本文件
       if (!file.existsSync(versionJsonPath)) {
@@ -47,7 +47,7 @@ module.exports = {
 
       return versionJson
     } catch (error) {
-      logger.error('解析release.version.json失败')
+      logger.error('解析mp.version.json失败')
       return process.exit(1)
     }
   },
