@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+const Program = require('commander')
+const { open } = require('../scripts/wxcli/index')
+const { getUserConfig } = require('../config/util.js')
+const { wxcli, cwd } = require('../config')
+
+Program
+  .name('mp-open')
+  .action(async () => {
+    const userConfig = await getUserConfig()
+    const command = userConfig.wxcli || wxcli
+    open(command, cwd)
+  })
+
+Program.parse(process.argv)

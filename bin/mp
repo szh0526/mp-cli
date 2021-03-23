@@ -15,6 +15,8 @@ Program
   .alias('c')
   .command('preview', '预览小程序，生成二维码')
   .alias('p')
+  .command('open', '启动微信开发者工具')
+  .alias('o')
   .command('login', '小程序登陆')
   .alias('l')
   .command('buildNpm', '小程序构建npm|plugin')
@@ -49,6 +51,7 @@ const VALID_COMMAND = [
   'create', 'c',
   'preview', 'p',
   'buildNpm', 'bn',
+  'open', 'o',
   'login', 'l',
   'audit', 'a',
   'upload', 'u',

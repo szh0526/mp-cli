@@ -262,7 +262,6 @@ const upload = async (command = wxcli, projectRoot) => {
               const config = JSON.parse(file.readFileSync(versionConfigPath))
               config.version = newVersion
               config.desc = desc
-              console.log(version)
               await file.writeFile(
                 versionConfigPath,
                 JSON.stringify(config, null, '\t'),
@@ -343,11 +342,15 @@ const quit = (command = wxcli) => {
  * 关闭项目窗口
  */
 const open = (command = wxcli, projectRoot) => {
-  logger.info('启动开发者工具...')
+  logger.info('启动微信开发者工具...')
   try {
     checkWxcli(command)
     const execLog = spawnSync(command, ['open', '--project', projectRoot])
     handleSuccess(execLog)
+    setTimeout(() => {
+      logger.clear()
+      logger.success('微信开发者工具已启动\r\n')
+    }, 1000)
   } catch (error) {
     handleError(error)
   }
