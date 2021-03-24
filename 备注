@@ -35,3 +35,20 @@ https://gitee.com/beon/lazy-git
 
 用于从github上拉取模板到本地的工具
 https://www.jianshu.com/p/9782680e6336
+
+
+1.从远程分支创建新的本地分支（创建前先git pull）
+从远程分支创建新的本地分支时，A 为本地分支 name ，B 为远程仓库的分支 name 。
+git pull
+git checkout -b A origin/B
+
+
+// 自动化commit流程
+
+// 提交merge请求
+
+// 自动化push
+
+// 创建新的开发分支（区分master/还是其他分支作为主分支）
+
+// git commit 前检测husky

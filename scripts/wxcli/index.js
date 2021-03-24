@@ -9,6 +9,7 @@ const file = require('../../lib/file')
 const { getUploadJsonConfig } = require('../../config/util')
 const logger = require('../../lib/logger')
 const { wxcli } = require('../../config')
+const publish = require('./publish')
 
 const spawnSync = (cmd = '', args = [], options) => spawn.sync(cmd, args, { ...options, ...{ stdio: 'inherit' } })
 
@@ -235,7 +236,7 @@ const upload = async (command = wxcli, projectRoot) => {
     .then(async (answer) => {
       logger.info('开始上传小程序代码...')
       const { isRelease, semver, desc } = answer
-      const [, , newVersion] = semver.match(/(.*?)\s\((.*?)\)/)
+      const [, , newVersion] = isRelease ? semver.match(/(.*?)\s\((.*?)\)/) : []
 
       try {
         checkWxcli(command)
@@ -246,7 +247,7 @@ const upload = async (command = wxcli, projectRoot) => {
           '--project',
           projectRoot,
           '--version',
-          version,
+          isRelease ? newVersion : version,
           '--desc',
           desc,
           '--info-output',
@@ -267,6 +268,8 @@ const upload = async (command = wxcli, projectRoot) => {
                 JSON.stringify(config, null, '\t'),
               )
             }
+
+            await publish(newVersion)
 
             logger.clear()
             logger.success(
