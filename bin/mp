@@ -25,6 +25,8 @@ Program
   .alias('a')
   .command('upload', '上传')
   .alias('u')
+  .command('template', '脚手架项目模板')
+  .alias('t')
 
 // // 自定义指令
 // Program
@@ -55,6 +57,7 @@ const VALID_COMMAND = [
   'login', 'l',
   'audit', 'a',
   'upload', 'u',
+  'template', 't',
 ]
 
 if (!VALID_COMMAND.includes(process.argv[2])) {

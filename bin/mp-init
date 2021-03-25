@@ -2,7 +2,7 @@
 const Program = require('commander')
 const inquirer = require('inquirer')
 const logger = require('../lib/logger.js')
-const { isProjectName, isAppId } = require('../lib/validate')
+const { isEnName, isAppId } = require('../lib/validate')
 const { init } = require('../scripts/init')
 
 const Prompt = inquirer.createPromptModule()
@@ -13,7 +13,7 @@ const initPrompt = [
     name: 'projectName',
     message: '请输入项目名称',
     validate(input) {
-      if (!isProjectName(input)) {
+      if (!isEnName(input)) {
         return '项目名称格式错误'
       }
       return true
