@@ -114,6 +114,7 @@ Options:
 * [小程序开发文档](https://developers.weixin.qq.com/miniprogram/dev/framework/)
 * [自动化构建工具](https://www.npmjs.com/package/gulp)
 * [node的spawn和spawnSync的跨平台解决方案](https://www.npmjs.com/package/cross-spawn)
+* [下载并提取git仓库(支持GitHub, GitLab, Bitbucket, 相对路径)](https://www.npmjs.com/package/download-git-repo)
 
 
 # **开发人员**

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const Program = require('commander')
 const {
-  add, del, list, init, use,
+  add, del, list, download, use,
 } = require('../scripts/template')
 
 Program
@@ -9,7 +9,7 @@ Program
   .option('-a, --add', '新增模板')
   .option('-d, --del', '删除模板')
   .option('-ls, --list', '模板列表')
-  .option('-i, --init', '初始化基础模板')
+  .option('-dl, --download', '下载模板')
   .option('-u, --use', '切换模板')
   .action(async (options) => {
     if (options.add) {
@@ -18,10 +18,10 @@ Program
       del()
     } else if (options.list) {
       list()
-    } else if (options.init) {
-      init()
     } else if (options.use) {
       use()
+    } else if (options.download) {
+      download()
     }
   })
 
