@@ -10,7 +10,7 @@ Program
   .action(async (answer) => {
     const userConfig = await getUserConfig()
     const command = userConfig.wxcli || wxcli
-    buildNpm(command, cwd, answer)
+    await buildNpm(command, cwd, answer)
   })
 
 Program.parse(process.argv)

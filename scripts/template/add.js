@@ -26,7 +26,7 @@ module.exports = () => {
     }, {
       type: 'input',
       name: 'url',
-      message: '请输入模板[git域名]/[git账户名]/[git仓库名],eg:https://github.com/xxx/xxx',
+      message: '请输入模板[git域名]/[git账户名]/[git仓库名]/[git分支],eg:https://github.com/xxx/xxx/#branch',
       validate(val) {
         if (val === '') {
           return '地址不能为空!'
@@ -45,7 +45,7 @@ module.exports = () => {
     },
   ]).then(async (answer) => {
     const { name, url, isDefault } = answer
-    // 过滤 unicode 字符
+
     _templates[name] = {
       url,
     }

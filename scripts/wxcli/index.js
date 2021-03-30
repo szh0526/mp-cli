@@ -9,7 +9,7 @@ const file = require('../../lib/file')
 const { getUploadJsonConfig } = require('../../config/util')
 const logger = require('../../lib/logger')
 const { wxcli } = require('../../config')
-const publish = require('./publish')
+const publish = require('../git/publish')
 
 const spawnSync = (cmd = '', args = [], options) => spawn.sync(cmd, args, { ...options, ...{ stdio: 'inherit' } })
 
@@ -294,9 +294,9 @@ const upload = async (command = wxcli, projectRoot) => {
 /**
  * npm构建
  */
-const buildNpm = (command = wxcli, projectRoot, options) => {
+const buildNpm = (command = wxcli, projectRoot, options = { compileType: 'npm' }) => new Promise((resolve) => {
   const { compileType } = options
-  logger.info(`构建 ${compileType} ...`)
+  // logger.info(`构建 ${compileType} ...`)
 
   try {
     checkWxcli(command)
@@ -308,10 +308,18 @@ const buildNpm = (command = wxcli, projectRoot, options) => {
       compileType,
     ])
     handleSuccess(execLog)
+    if (execLog.status === 1) {
+      resolve(true)
+    } else {
+      resolve(false)
+      process.exit(1)
+    }
   } catch (error) {
     handleError(error)
+    resolve(false)
+    process.exit(1)
   }
-}
+})
 
 /**
  * 关闭项目窗口

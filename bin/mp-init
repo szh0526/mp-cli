@@ -4,6 +4,9 @@ const inquirer = require('inquirer')
 const logger = require('../lib/logger.js')
 const { isEnName, isAppId } = require('../lib/validate')
 const { init } = require('../scripts/init')
+const { templates } = require('../package.json')
+
+const _templates = templates || {}
 
 const Prompt = inquirer.createPromptModule()
 
@@ -41,6 +44,12 @@ const initPrompt = [
       }
       return true
     },
+  },
+  {
+    type: 'list',
+    name: 'templateName',
+    message: '请选择一个项目模板',
+    choices: Object.keys(_templates),
   },
   {
     type: 'list',
@@ -92,7 +101,7 @@ const initPrompt = [
   {
     type: 'confirm',
     name: 'isOk',
-    message: '确定执行以上操作？',
+    message: '确定执行以上配置？',
     default: true,
   },
 ]
