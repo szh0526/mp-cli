@@ -18,7 +18,6 @@ const downloadTemplate = (url, fileName) => new Promise((resolve) => {
     } else {
       spinner.text = '下载模板成功'
       spinner.succeed()
-      logger.clear()
       resolve(true)
     }
   })

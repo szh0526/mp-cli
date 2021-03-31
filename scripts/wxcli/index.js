@@ -308,12 +308,7 @@ const buildNpm = (command = wxcli, projectRoot, options = { compileType: 'npm' }
       compileType,
     ])
     handleSuccess(execLog)
-    if (execLog.status === 1) {
-      resolve(true)
-    } else {
-      resolve(false)
-      process.exit(1)
-    }
+    resolve(true)
   } catch (error) {
     handleError(error)
     resolve(false)

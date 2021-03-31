@@ -59,8 +59,8 @@ async function init(answer) {
         config.projectname = projectName
         config.libVersion = libVersion
         config.description = projectDescription
-        // // npm构建 参考 https://vant-contrib.gitee.io/vant-weapp/#/quickstart#qi-ta
-        // // npm构建 只会把dependencies下的依赖打包到miniprogram_npm下
+        // npm构建 参考 https://vant-contrib.gitee.io/vant-weapp/#/quickstart#qi-ta
+        // npm构建 只会把dependencies下的依赖打包到miniprogram_npm下
         config.setting.packNpmManually = true
         config.setting.packNpmRelationList = [{
           packageJsonPath: './package.json',
