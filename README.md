@@ -80,11 +80,14 @@ Options:
 Commands:
   init|i          初始化
   build|b         小程序编译
-  new|n           新建页面或组件
+  create|c        新建页面或组件
   preview|p       预览小程序，生成二维码
+  open|o          启动微信开发者工具
+  login|l         小程序登陆
+  buildNpm|bn     小程序构建npm|plugin
   audit|a         项目审计
-  config|c <cmd>  全局配置
   upload|u        上传
+  template|t      脚手架项目模板
   help [command]  display help for command
 ```
 

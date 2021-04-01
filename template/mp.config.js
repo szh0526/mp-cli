@@ -8,7 +8,7 @@ module.exports = {
   entry: './src',
   output: './dist',
   // 模板文件夹插槽，方便自定义模版
-  template: './template',
+  template: './template/src',
   // 预编译配置
   sass: {
     dir: 'src/css/',
