@@ -22,7 +22,7 @@ module.exports = async (newVersion) => {
   try {
     // 同步代码
     spawnSync('git', ['pull'], { cwd })
-    logger.success('同步代码完成')
+    logger.log('同步代码完成')
 
     // 询问是否提交所有改动
     const isCommit = await askCommit()
@@ -33,11 +33,11 @@ module.exports = async (newVersion) => {
 
     // 添加备注
     spawnSync('git', ['commit', '-m', `发布线上版本: ${newVersion}`], { cwd })
-    logger.success('提交暂存区到本地仓库中')
+    logger.log('提交暂存区到本地仓库中')
 
     // 打tag
     spawnSync('git', ['tag', '-a', `v${newVersion}`, '-m', `release ${newVersion} version`], { cwd })
-    logger.success(`当前tag标签: ${newVersion}`)
+    logger.log(`当前tag标签: ${newVersion}`)
 
     // 同时推送git提交和标签
     spawnSync('git', ['push', '--follow-tags'], { cwd })
