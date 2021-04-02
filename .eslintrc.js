@@ -1,17 +1,16 @@
 module.exports = {
-	"extends":  ["prettier", "plugin:prettier/recommended"],
+	"extends":  ["eslint-config-airbnb-base","prettier", "plugin:prettier/recommended"],
 	"parser": "babel-eslint",
 	"globals": {
 	},
 
 	"rules": {
-		"class-methods-use-this": "off",
-		"no-underscore-dangle": "off",
-		"linebreak-style": [0 ,"error", "windows"],
-	 	"semi": [
-			"error",
-			"never",
-		],
+		"prettier/prettier": "error",
+    "strict": "off",
+    "no-console": "off",
+    "import/no-dynamic-require": "off",
+    "global-require": "off",
+    "require-yield": "off",
 	},
 	"plugins": ["prettier"],
 }
