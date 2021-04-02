@@ -118,6 +118,8 @@ Options:
 * [自动化构建工具](https://www.npmjs.com/package/gulp)
 * [node的spawn和spawnSync的跨平台解决方案](https://www.npmjs.com/package/cross-spawn)
 * [下载并提取git仓库(支持GitHub, GitLab, Bitbucket, 相对路径)](https://www.npmjs.com/package/download-git-repo)
+* [执行git事件之前或之后进行一些额外的操作](https://www.npmjs.com/package/husky)
+* [对git提交的文件进行eslint代码质量检查](https://www.npmjs.com/package/lint-staged)
 
 
 # **开发人员**

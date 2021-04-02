@@ -1,16 +1,7 @@
 module.exports = {
-	"extends": "airbnb-base",
-
+	"extends":  ["prettier", "plugin:prettier/recommended"],
+	"parser": "babel-eslint",
 	"globals": {
-		"__DEV__": true,
-		"__WECHAT__": true,
-		"App": true,
-		"Page": true,
-		"Component": true,
-		"Behavior": true,
-		"wx": true,
-		"getApp": true,
-		"getCurrentPages": true,
 	},
 
 	"rules": {
@@ -22,4 +13,5 @@ module.exports = {
 			"never",
 		],
 	},
+	"plugins": ["prettier"],
 }
