@@ -10,13 +10,14 @@ const { getUploadJsonConfig } = require('../../config/util')
 const logger = require('../../lib/logger')
 const { wxcli } = require('../../config')
 const publish = require('../git/publish')
+const { resolve } = require('path')
 
 const spawnSync = (cmd = '', args = [], options) => spawn.sync(cmd, args, { ...options, ...{ stdio: 'inherit' } })
 
 const MSG_PORT_DISABLE = '需要打开微信开发者工具 -> 设置 -> 安全设置，将服务端口开启。'
 const MSG_NEED_LOGIN = '需要重新扫码 登录 微信开发者工具。'
 const MSG_NEED_WXCLI = '需要指定微信开发者工具cli安装路径，详见readme'
-const MSG_WXCLI_404 = '当前指定的微信开发者工具cli路径不存在，详见readme，建议使用 wxa config 重新配置'
+const MSG_WXCLI_404 = '当前指定的微信开发者工具cli路径不存在，详见readme'
 const MSG_CONFIGFILE_404 = '微信开发者工具cli执行目录缺少 project.config.json文件'
 const MSG_NO_NODE_MODULES = '没有找到可以构建的 NPM 包，请确认需要参与构建的 npm 都在 `miniprogramRoot` 目录内'
 
@@ -103,7 +104,7 @@ const handleError = (error) => {
 /**
  * 小程序登陆
  */
-const login = (command = wxcli, projectRoot, options) => {
+const login = (command = wxcli, projectRoot, options = {}) => {
   let args = []
   let { resultOutput, qrOutput } = options
   const { qrFormat } = options
@@ -150,56 +151,60 @@ const login = (command = wxcli, projectRoot, options) => {
 /**
  * 生成-预览小程序二维码
  */
-const preview = (command = wxcli, projectRoot, options) => {
-  let args = []
-  let { infoOutput, qrOutput } = options
-  const { qrFormat, compileCondition } = options
-
-  if (!infoOutput) {
-    infoOutput = path.resolve(projectRoot, 'mp.preview.json')
-  }
-
-  args = args.concat([
-    'preview',
-    '--project',
-    projectRoot,
-    '--qr-format',
-    qrFormat,
-    '--info-output',
-    infoOutput,
-  ])
-
-  if (!qrOutput) {
-    qrOutput = path.resolve(projectRoot, 'mp.qrcode.txt')
-    args = args.concat(['--qr-output', qrOutput])
-  }
-
-  if (compileCondition) {
-    if (os.type() === 'Windows_NT') {
-      // win系统不能使用compile-condition参数。部分ide集成的终端无法显示二维码
-      logger.warn(
-        `windows系统暂不支持传递启动参数，将忽略:${compileCondition}`,
-      )
-    } else {
-      args = args.concat(['--compile-condition', compileCondition])
+const preview = (command = wxcli, projectRoot, options = {}) => {
+  return new Promise(resolve =>{
+    let args = []
+    let { infoOutput = '', qrOutput } = options
+    const { qrFormat = 'terminal', compileCondition } = options
+  
+    if (!infoOutput) {
+      infoOutput = path.resolve(projectRoot, 'mp.preview.json')
     }
-  }
-
-  logger.info('开始生成预览二维码')
-
-  try {
-    checkWxcli(command)
-    const execLog = spawnSync(command, args)
-    handleSuccess(execLog)
-    setTimeout(() => {
-      if (qrFormat !== 'terminal') {
-        logger.clear()
+  
+    args = args.concat([
+      'preview',
+      '--project',
+      projectRoot,
+      '--qr-format',
+      qrFormat,
+      '--info-output',
+      infoOutput
+    ])
+  
+    if (!qrOutput && qrFormat === 'base64') {
+      qrOutput = path.resolve(projectRoot, 'mp.qrcode.txt')
+      args = args.concat(['--qr-output', qrOutput])
+    }
+  
+    if (compileCondition) {
+      if (os.type() === 'Windows_NT') {
+        // win系统不能使用compile-condition参数。部分ide集成的终端无法显示二维码
+        logger.warn(
+          `windows系统暂不支持传递启动参数，将忽略:${compileCondition}`,
+        )
+      } else {
+        args = args.concat(['--compile-condition', compileCondition])
       }
-      logger.success('生成预览二维码成功\r\n')
-    }, 1000)
-  } catch (error) {
-    handleError(error)
-  }
+    }
+  
+    logger.info('开始生成预览二维码')
+  
+    try {
+      checkWxcli(command)
+      const execLog = spawnSync(command, args, {cwd: projectRoot})
+      handleSuccess(execLog)
+      setTimeout(() => {
+        if (qrFormat !== 'terminal') {
+          logger.clear()
+        }
+        logger.success('生成预览二维码成功\r\n')
+        resolve(true)
+      }, 1000)
+    } catch (error) {
+      handleError(error)
+      resolve(false)
+    }
+  })
 }
 
 /**

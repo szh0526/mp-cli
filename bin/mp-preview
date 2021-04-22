@@ -13,7 +13,7 @@ Program
   .action(async (options) => {
     const userConfig = await getUserConfig()
     const command = userConfig.wxcli || wxcli
-    preview(command, cwd, options)
+    await preview(command, cwd, options)
   })
 
 Program.parse(process.argv)

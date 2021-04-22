@@ -9,7 +9,7 @@ const logger = require('../lib/logger')
 const file = require('../lib/file')
 const { buildNpm } = require('./wxcli/index')
 const { spawnSync } = require('../lib/cross-spawn')
-const { downloadTemplate } = require('./git/download')
+const { download } = require('./git/download')
 const { cwd, srcTemplateRoot, userConfigTemplate } = require('../config')
 const { templates } = require('../package.json')
 
@@ -41,7 +41,7 @@ async function init(answer) {
       process.exit(1)
     }
 
-    const result = await downloadTemplate(templateCfg.url, projectName)
+    const result = await download(templateCfg.url, projectName)
 
     if (result) {
       const projectRoot = path.join(cwd, projectName)

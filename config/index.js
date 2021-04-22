@@ -25,9 +25,6 @@ module.exports = {
   // 小程序CLI工具安装路径
   wxcli,
 
-  // __dirname node全局变量，获得当前文件所在目录的完整目录名
-  dirname: __dirname,
-
   // __filename node全局变量，获取当前模块文件的带有完整绝对路径的文件名
   __filename,
 

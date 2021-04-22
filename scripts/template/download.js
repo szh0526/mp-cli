@@ -1,5 +1,5 @@
 const inquirer = require('inquirer')
-const { downloadTemplate } = require('../git/download')
+const { download } = require('../git/download')
 const { isEnName } = require('../../lib/validate')
 const { templates } = require('../../package.json')
 
@@ -27,6 +27,6 @@ module.exports = () => {
   ]).then(async (answer) => {
     const { templateName, projectName } = answer
     const { url } = _templates[templateName]
-    await downloadTemplate(url, projectName)
+    await download(url, projectName)
   })
 }

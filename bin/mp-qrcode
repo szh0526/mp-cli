@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+const Program = require('commander')
+const inquirer = require('inquirer')
+const logger = require('../lib/logger.js')
+const { previewQrCode } = require('../scripts/wxcli/qrcode')
+const { projects } = require('../package.json')
+const execSync = require('child_process').execSync;
+
+const Prompt = inquirer.createPromptModule()
+
+//环境变量
+const environments = [{
+  "name":"开发版",
+  "value":"dev"
+},{
+  "name":"灰度版",
+  "value":"gray"
+},{
+  "name":"体验版",
+  "value":"pre"
+},{
+  "name":"线上版",
+  "value":"prod"
+}]
+
+const findProject = (appName) => projects.find(x=>x.appName === appName)
+
+const findEnv = (env) => environments.find(x=>x.name === env)
+
+//根据源代码分支切换分支
+const switchBranchBySource = (source) => {
+  return new Promise(resolve=>{
+    const branchText = execSync(`git ls-remote -h ${source}.git`);
+    // 正则截取分支列表
+    const gitBranchRegExp = /(?<=refs\/heads\/).*?(?=\s)/gi
+    const branchList = branchText.toString("utf8").match(gitBranchRegExp)
+
+    Prompt([{
+      type: 'list',
+      name: 'branch',
+      message: '请选择分支',
+      choices: branchList,
+      // when(answer) {
+      //   return answer.env === 'dev' || answer.env === 'pre'
+      // },
+    }]).then((answer)=>{
+      resolve(answer.branch)
+    })
+  })
+}
+
+Program.action(() => {
+  Prompt([
+    {
+      type: 'list',
+      name: 'app',
+      message: '请选择项目',
+      choices: projects.map(x=>x.appName)
+    },
+    {
+      type: 'list',
+      name: 'env',
+      message: '请选择预览二维码环境',
+      choices: environments.map(x=>x.name),
+      default: "开发版",
+    }
+  ])
+    .then(async (answer) => {
+      const { app,env } = answer
+      const projectItem = findProject(app)
+      const envItem = findEnv(env)
+      const branch = await switchBranchBySource(projectItem.git)
+      const url = `${projectItem.git}/#${branch}`
+      // console.log(branch,envItem.value,url)
+      previewQrCode(url,envItem.value,branch)
+    })
+    .catch((error) => {
+      logger.error(error.stack)
+      process.exit(1)
+    })
+})
+
+Program.parse(process.argv)

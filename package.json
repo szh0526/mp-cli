@@ -56,5 +56,9 @@
 			"url": "https://github.com/szh0526/mp-cli-template-base/#main",
 			"default": 1
 		}
-	}
+	},
+	"projects":[{
+		"appName":"万店宝小程序",
+		"git":"https://git.jd.com/wjfe/wdb-wx"
+	}]
 }

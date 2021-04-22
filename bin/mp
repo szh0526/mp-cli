@@ -15,6 +15,8 @@ Program
   .alias('c')
   .command('preview', '预览小程序，生成二维码')
   .alias('p')
+  .command('qrcode', '指定小程序并动态生成各环境小程序预览二维码')
+  .alias('q')
   .command('open', '启动微信开发者工具')
   .alias('o')
   .command('login', '小程序登陆')
@@ -52,6 +54,7 @@ const VALID_COMMAND = [
   'build', 'b',
   'create', 'c',
   'preview', 'p',
+  'qrcode', 'q',
   'buildNpm', 'bn',
   'open', 'o',
   'login', 'l',
