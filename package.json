@@ -59,6 +59,39 @@
 	},
 	"projects":[{
 		"appName":"万店宝小程序",
-		"git":"https://git.jd.com/wjfe/wdb-wx"
+		"git":"https://git.jd.com/wjfe/wdb-wx",
+		"environments":[{
+			"name": "开发版",
+			"env": "dev",
+			"config":{
+				"baseUrl":"http://wdbgateway-pre.jd.com/app/api",
+				"dataSource":"wdb_yf",
+				"widgetId":"DH_WDB_GATEWAY_SIT_GROUP_YF"
+			}
+		}, {
+			"name": "灰度版",
+			"env": "gray",
+			"config":{
+				"baseUrl":"http://wdbgateway-preview.jd.com/app/api",
+				"dataSource":"wdb_preview",
+				"widgetId":"DH_WDB_GATEWAY_SIT_GROUP"
+			}
+		}, {
+			"name": "体验版",
+			"env": "pre",
+			"config":{
+				"baseUrl":"https://wdbapi.jd.com/app/api",
+				"dataSource":"wdb_prod",
+				"widgetId":"DH_WDB_GATEWAY_SIT_GROUP"
+			}
+		}, {
+			"name": "线上版",
+			"env": "prod",
+			"config":{
+				"baseUrl":"https://wdbapi.jd.com/app/api",
+				"dataSource":"wdb_prod",
+				"widgetId":"DH_WDB_GATEWAY_SIT_GROUP"
+			}
+		}]
 	}]
 }
