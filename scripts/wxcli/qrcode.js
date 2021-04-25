@@ -1,5 +1,6 @@
 /** 
  * 指定小程序和源码分支，生成各环境小程序二维码
+ * todo: 1.项目的增删查
 */
 const path = require('path')
 const { download } = require('../git/download')
