@@ -1,6 +1,12 @@
 /** 
  * 指定小程序和源码分支，生成各环境小程序二维码
- * todo: 1.项目的增删查
+ * todo: 1.项目的增删查 2.判断是否微信登陆
+ * 预览各环境二维码依赖环境
+    node
+    npm
+    git
+    增删查 项目列表
+    微信开发者工具
 */
 const path = require('path')
 const { download } = require('../git/download')
